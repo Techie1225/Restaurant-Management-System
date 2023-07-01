@@ -1,9 +1,11 @@
 package com.restaurant.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.restaurant.model.Payment;
 
-public interface IPaymentRepo extends JpaRepository<Payment, Integer> {
+@Repository
+public interface IPaymentRepo extends CrudRepository<Payment, Integer> {
 
 }

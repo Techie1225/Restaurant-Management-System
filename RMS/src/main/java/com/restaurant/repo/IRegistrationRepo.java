@@ -1,9 +1,11 @@
 package com.restaurant.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.restaurant.model.Registration;
 
-public interface IRegistrationRepo extends JpaRepository<Registration, Integer> {
+@Repository
+public interface IRegistrationRepo extends CrudRepository<Registration, Integer> {
 
 }

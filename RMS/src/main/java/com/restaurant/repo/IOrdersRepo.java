@@ -1,9 +1,11 @@
 package com.restaurant.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.restaurant.model.Orders;
 
-public interface IOrdersRepo extends JpaRepository<Orders, Integer> {
+@Repository
+public interface IOrdersRepo extends CrudRepository<Orders, Integer> {
 
 }

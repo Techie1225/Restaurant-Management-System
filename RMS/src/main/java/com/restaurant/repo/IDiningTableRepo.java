@@ -1,9 +1,11 @@
 package com.restaurant.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.restaurant.model.DiningTables;
 
-public interface IDiningTableRepo extends JpaRepository<DiningTables, Integer> {
+@Repository
+public interface IDiningTableRepo extends CrudRepository<DiningTables, Integer> {
 
 }
