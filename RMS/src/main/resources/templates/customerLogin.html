@@ -66,19 +66,19 @@ body {
 				</div>
 				<div class="row">
 					<div class="col-md-7 offset-md-3">
-						<div class="card border-0">
+						<div class="card border-0 m-0 p-0">
 							<div class="card-body">
 
 								<div class="container">
 									<!--  	<h3 class="text-center" style="color: red;">{{message}}</h3> -->
 									<h3 style="color: red; margin: 30px;" th:text="${msg}"></h3>
 								</div>
-								<form th:action="@{/rms/customerLogin}" th:object="${login}"
+								<form th:action="@{/rms/customerLogin}" th:object="${Customer}"
 									method="POST">
 									<div class="form-group">
 										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Username</span> <input type="email" required="required"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
-											id="username" aria-describedby="emailHelp" name="username"
+											id="email" aria-describedby="emailHelp" name="email"
 											autofocus>
 									</div>
 									<br>
@@ -100,7 +100,13 @@ body {
 
 
 								</form>
+								<hr style="height: 10px;">
+								<center>
+									<a href="customerRegister" class="btn btn-success ">
+										<h4>&nbsp;&nbsp;Create New Account&nbsp;&nbsp;</h4>
+									</a>
 
+								</center>
 							</div>
 
 						</div>

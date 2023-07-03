@@ -70,14 +70,13 @@ body {
 							<div class="card-body">
 
 								<div class="container">
-									<!--  	<h3 class="text-center" style="color: red;">{{message}}</h3> -->
-									<h3 style="color: red; margin: 30px;" th:text="${msg}"></h3>
+									<h4 style="color: red;padding-bottom:5px;font-family: cursive" th:text="${msg}"></h4>
 								</div>
-								<form th:action="@{/rms/adminLogin}" th:object="${login}" method="POST">
+								<form th:action="@{/rms/adminLogin}" th:object="${Admin}" method="POST">
 									<div class="form-group">
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Username</span> <input type="email" required="required"
-											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
-											id="username" aria-describedby="emailHelp" name="username"
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Username</span> <input type="text" required="required"
+											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1.5"
+											id="email" aria-describedby="emailHelp" name="email"
 											autofocus>
 									</div>
 									<br>
@@ -85,7 +84,7 @@ body {
 
 										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Password</span> <input
 											required="required" type="password"
-											class="form-control mt-2 border-left-0 border-top-0 border-right-0"
+											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1.5"
 											id="password" name="password" /> <br>
 									</div>
 									<br>

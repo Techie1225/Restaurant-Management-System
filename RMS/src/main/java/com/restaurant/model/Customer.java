@@ -1,10 +1,7 @@
 package com.restaurant.model;
 
-import java.time.LocalDate;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Customers")
-public class Registration {
+public class Customer {
 	
-	@Id
-	private Integer id;
-	private String dob;
+	private String name;
+	private Long phone;
+	private String email;
+	private String password;
 
 }
