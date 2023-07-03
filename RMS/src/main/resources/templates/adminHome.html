@@ -21,16 +21,48 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+
 <style>
-    body {
-    
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-  </style>
+.bg-img {
+	background-image:
+		url('https://c4.wallpaperflare.com/wallpaper/416/395/607/airplane-download-pictures-wallpaper-preview.jpg');
+	height: 90.2vh;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.body {
+	overflow: hidden;
+}
+
+button {
+	color: orange;
+	background-color: black;
+	font-size: 19px;
+	border: 1px solid #2d63c8;
+	padding: 15px 50px;
+	cursor: pointer;
+	width: 250px;
+}
+
+button:hover {
+	color: #2d63c8;
+	background-color: #ffffff;
+}
+
+a {
+	text-decoration: none;
+}
+</style>
 </head>
 
-<body background="https://i.pinimg.com/originals/df/bd/e6/dfbde6c2f1a8f5d5b5a47c81fbecd1eb.jpg">
-<div th:insert="navbar :: navbar">  </div>
-</body>
 
+
+<body>
+	<div th:insert="navbar :: navbar"></div>
+	<div class="container-fluid bg-img"></div>
+	</div>
+
+
+</body>
