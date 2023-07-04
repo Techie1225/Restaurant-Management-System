@@ -72,7 +72,7 @@ body {
 								<div class="container">
 									<h4 style="color: red;padding-bottom:5px;font-family: cursive" th:text="${msg}"></h4>
 								</div>
-								<form th:action="@{/rms/adminLogin}" th:object="${Admin}" method="POST">
+								<form th:action="@{home}" th:object="${Admin}" method="POST">
 									<div class="form-group">
 										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Username</span> <input type="text" required="required"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1.5"

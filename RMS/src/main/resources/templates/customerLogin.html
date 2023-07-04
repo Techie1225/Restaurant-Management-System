@@ -55,7 +55,7 @@ body {
 	<div th:insert="navbar :: navbar"></div>
 	<div class="row">
 		<div class="col-md-3"></div>
-		<div class="col-md-6 mt-5">
+		<div class="col-md-6 mt-3">
 
 			<div class="container-fluid">
 
@@ -71,9 +71,9 @@ body {
 
 								<div class="container">
 									<!--  	<h3 class="text-center" style="color: red;">{{message}}</h3> -->
-									<h3 style="color: red; margin: 30px;" th:text="${msg}"></h3>
+									<h4 style="padding-bottom:5px;font-family: cursive;" th:style="|${color == 'red' ? 'color: red;' : 'color: green;'}|" th:text="${msg}"></h4>
 								</div>
-								<form th:action="@{/rms/customerLogin}" th:object="${Customer}"
+								<form th:action="@{home}" th:object="${customer}"
 									method="POST">
 									<div class="form-group">
 										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Username</span> <input type="email" required="required"
@@ -102,7 +102,7 @@ body {
 								</form>
 								<hr style="height: 10px;">
 								<center>
-									<a href="customerRegister" class="btn btn-success ">
+									<a href="register" class="btn btn-success ">
 										<h4>&nbsp;&nbsp;Create New Account&nbsp;&nbsp;</h4>
 									</a>
 
