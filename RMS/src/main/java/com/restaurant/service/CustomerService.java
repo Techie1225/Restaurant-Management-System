@@ -20,12 +20,12 @@ public class CustomerService {
 		return iCustomerRepo.save(customer);
 	}
 
-	public Optional<Customer> findByEmailAndPassword(String email, String password) {
-		return iCustomerRepo.findByEmailAndPassword(email, password);
-	}
-
-	public Optional<Customer> findByEmailOrPhone(String email, Long phone) {
-		return iCustomerRepo.findFirstByEmailOrPhone(email, phone);
-	}
+//	public Optional<Customer> findByEmailAndPassword(String email, String password) {
+//		return iCustomerRepo.findByEmailAndPassword(email, password);
+//	}
+//
+//	public Optional<Customer> findByEmailOrPhone(String email, Long phone) {
+//		return iCustomerRepo.findFirstByEmailOrPhone(email, phone);
+//	}
 
 }

@@ -22,15 +22,57 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 <style>
-    body {
-    
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
+
+body{
+overflow: hidden;
+}
+.container-fluid{
+
+padding-left: 0px;
+padding-right: 0px;
+margin-left: 0px;
+margin-right: 0px;
+}
+	#bg{
+	width:100%;
+	height:530px;
+	background-image: url("background2.jpeg");
+	padding:0px;
+	margin:0px;
+	
+	}
+	#bg1{
+	width:65%;
+	height:650px;
+	background-image: url("foodmenu1.jpg");
+	margin-left:100px;
+	background-repeat: no-repeat;
+	padding:0px;
+	background-size: 65%
+
+	}
+	
+	#bg2{
+	width:100%;
+	height:700px;
+	background-image: url("symbol-PhotoRoom (3).png");
+	margin-left:900px;
+	background-repeat: no-repeat;
+	padding:200px;
+	background-size: 65%;
+	}
   </style>
 </head>
 
-<body background="https://i.pinimg.com/originals/df/bd/e6/dfbde6c2f1a8f5d5b5a47c81fbecd1eb.jpg">
+<body class="container-fluid">
 <div th:insert="navbar :: navbar">  </div>
+<div id="bg">
+<div id="bg1">
+<div id="bg2">
+
+</div>
+</div>
+
+</div>
 </body>
 

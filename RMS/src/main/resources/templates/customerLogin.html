@@ -73,7 +73,7 @@ body {
 									<!--  	<h3 class="text-center" style="color: red;">{{message}}</h3> -->
 									<h4 style="padding-bottom:5px;font-family: cursive;" th:style="|${color == 'red' ? 'color: red;' : 'color: green;'}|" th:text="${msg}"></h4>
 								</div>
-								<form th:action="@{home}" th:object="${customer}"
+								<form th:action="@{login}" th:object="${Customer}"
 									method="POST">
 									<div class="form-group">
 										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Username</span> <input type="email" required="required"

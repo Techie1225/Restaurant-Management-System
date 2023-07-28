@@ -2,6 +2,7 @@ package com.restaurant.model;
 
 import java.time.LocalDate;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,8 @@ import lombok.NoArgsConstructor;
 public class Orders {
 	
 	@Id
-	private Integer id;
-	private String dob;
+	private ObjectId _id;
+	private ObjectId waiter_id;
+//	private 
 
 }

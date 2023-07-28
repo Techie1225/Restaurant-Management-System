@@ -19,12 +19,12 @@ public class WaiterService {
 		return iWaiterRepo.save(waiter);
 	}
 
-	public Optional<Waiter> findByEmailAndPassword(String email, String password) {
-		return iWaiterRepo.findByEmailAndPassword(email, password);
+	public Optional<Waiter> findByUsernameAndPassword(String username, String password) {
+		return iWaiterRepo.findByUsernameAndPassword(username, password);
 	}
 
-	public Optional<Waiter> findByEmailOrPhone(String email, Long phone) {
-		return iWaiterRepo.findFirstByEmailOrPhone(email, phone);
+	public Optional<Waiter> findByUsername(String username) {
+		return iWaiterRepo.findFirstByUsername(username);
 	}
 
 }

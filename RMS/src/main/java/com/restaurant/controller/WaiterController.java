@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping(value = "waiter")
+@RequestMapping("waiter")
 public class WaiterController {
 	
 	@Autowired
@@ -30,7 +30,7 @@ public class WaiterController {
 	
 	@PostMapping("register")
 	public String waiterRegister1(Waiter waiter,Model model, HttpServletRequest req) {
-		Optional<Waiter> check = waiterService.findByEmailOrPhone(waiter.getEmail(), waiter.getPhone());
+		Optional<Waiter> check = waiterService.findByUsername(waiter.getUsername());
 		System.out.println(check);
 		if (check.isPresent()) {
 			model.addAttribute("msg", "Duplicate Details!!!.....");
@@ -44,27 +44,28 @@ public class WaiterController {
 	}
 	
 	@GetMapping("login")
-	public String waiterLogin(Model model, HttpServletRequest req) {
+	public String waiterLogin() {
 		return "waiterLogin";
 	}
 	
 	@PostMapping("login")
 	public String waiterLogin1(Waiter waiter, Model model, HttpServletRequest req,RedirectAttributes redirectAttributes) {
-		Optional<Waiter> obj = waiterService.findByEmailAndPassword(waiter.getEmail(), waiter.getPassword());
+		System.out.println(waiter);
+		Optional<Waiter> obj = waiterService.findByUsernameAndPassword(waiter.getUsername(), waiter.getPassword());
 		if (obj.isPresent()) {
-			return "redirect:/home";
+			return "redirect:/waiter/home";
 		} else {
-			redirectAttributes.addAttribute("msg", "Invalid Login Credentials");
-			redirectAttributes.addAttribute("color", "red");
-			return "redirect:/login";
+			model.addAttribute("msg", "Invalid Login Credentials");
+			model.addAttribute("color", "red");
+			return "waiterLogin";
 		}
 	}
 	
 	@GetMapping("home")
 	public String home(HttpSession session) {
 		session.setAttribute("role", "Waiter");
-		return "adminHome";
-//		return "waiterHome";
+//		return "adminHome";
+		return "waiterHome";
 	}
 	
 	@GetMapping("/logout")

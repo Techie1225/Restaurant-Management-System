@@ -1,11 +1,13 @@
 package com.restaurant.repo;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import com.restaurant.model.Menu;
 
-@Repository
-public interface IMenuRepo extends CrudRepository<Menu, Integer> {
+public interface IMenuRepo extends CrudRepository<Menu,String> {
+
+	Optional<Menu> findByItem(String item);
 
 }

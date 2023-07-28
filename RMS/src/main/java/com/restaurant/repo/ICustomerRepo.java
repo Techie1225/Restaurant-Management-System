@@ -11,6 +11,6 @@ import com.restaurant.model.Customer;
 @Repository
 public interface ICustomerRepo extends CrudRepository<Customer, Integer> {
 
-	Optional<Customer> findByEmailAndPassword(String email, String password);
-	Optional<Customer> findFirstByEmailOrPhone(String email, Long phone);
+//	Optional<Customer> findByEmailAndPassword(String email, String password);
+//	Optional<Customer> findFirstByEmailOrPhone(String email, Long phone);
 }

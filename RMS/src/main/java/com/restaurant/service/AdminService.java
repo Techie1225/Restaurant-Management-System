@@ -15,8 +15,8 @@ public class AdminService {
 	@Autowired
 	private IAdminRepo iAdminRepo;
 
-	public Optional<Admin> findByEmailAndPassword(String email, String password) {
-		return iAdminRepo.findByEmailAndPassword(email, password);
+	public Optional<Admin> findByUsernameAndPassword(String username, String password) {
+		return iAdminRepo.findByUsernameAndPassword(username, password);
 	}
 	
 	
