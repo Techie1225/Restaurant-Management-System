@@ -17,9 +17,9 @@ public class Payment {
 	@Id
 	private ObjectId _id;
 	private Long card_number;
-	private String expiry_date;
+	private String expire_date;
 	private Integer cvv;
-	private String name_on_the_card;
+	private String holder_name;
 	private ObjectId customer_id;
 	private ObjectId order_id;
 }

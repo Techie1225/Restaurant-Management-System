@@ -1,7 +1,9 @@
 package com.restaurant.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -9,16 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.restaurant.model.Menu;
 import com.restaurant.model.Orders;
 import com.restaurant.model.ReservedTab;
 import com.restaurant.model.ReservedTables;
 import com.restaurant.model.Waiter;
+import com.restaurant.model.itemsquantity;
 import com.restaurant.model.orderItems;
 import com.restaurant.repo.ICustomerRepo;
 import com.restaurant.repo.IMenuRepo;
@@ -147,22 +150,79 @@ public class WaiterController {
 	
 	@GetMapping("orderitem")
 	public String oderitem(HttpSession session, Model model,orderItems orderItems) {
+		int quantity;
+		float totalprice=0;
 		System.out.println("------------------------");
 		System.out.println(orderItems);
 		Orders cust_order = iOrderRepo.findAllBy_id(orderItems.getId());
 		System.out.println(cust_order);
-//		Map<"String","Integer"> itemmap = {orderItems.getItemid():orderItems.g
+		Map<String, Map<String, Integer>> itemsid = cust_order.getItemsid();
+		if(itemsid.get(orderItems.getItemid()) != null) {
+			quantity=orderItems.getQuantity()+itemsid.get(orderItems.getItemid()).get("quantity");
+			System.out.println(quantity);
+			itemsid.get(orderItems.getItemid()).put("quantity",quantity);
+			cust_order.setItemsid(itemsid);
+			iOrderRepo.save(cust_order);
+		}
+		else {
+			Map<String,Integer> quanmap = new HashMap<String,Integer>();
+			quanmap.put("quantity", orderItems.getQuantity());
+			itemsid.put(orderItems.getItemid(), quanmap);
+			System.out.println(itemsid);
+			cust_order.setItemsid(itemsid);
+			iOrderRepo.save(cust_order);
+		}
 		model.addAttribute("orderid", orderItems.getId());
 		model.addAttribute("msg", "ordered Successfully");
 		model.addAttribute("menu", iMenuRepo.findAll());
+		List<itemsquantity> showitem = new ArrayList<>();
+		itemsid = cust_order.getItemsid();
+		itemsquantity iq = new itemsquantity();
+		for (String key : itemsid.keySet()) {
+	        System.out.println(key + ":" + itemsid.get(key));
+	        iq = new itemsquantity();
+	        Menu itemprice = findprices(new ObjectId(key));
+	        iq.setItem(itemprice.getItem());
+	        iq.setPrice((float) (itemprice.getPrice()*itemsid.get(key).get("quantity")));
+	        totalprice+=(float) (itemprice.getPrice()*itemsid.get(key).get("quantity"));
+	        iq.setQuantity(itemsid.get(key).get("quantity"));
+	        showitem.add(iq);
+	    }
+		model.addAttribute("items", showitem);
+		model.addAttribute("totalprice", totalprice);
+		System.out.println(itemsid);
+		System.out.println(showitem);
 		return "orders";
+	}
+	
+	public Menu findprices(ObjectId id) {
+		return iMenuRepo.findBy_id(id);
 	}
 	
 	@GetMapping("inorders")
 	public String inorders(@RequestParam("order_id") ObjectId order_id,Model model,HttpSession session) {
+		float totalprice=0;
 		System.out.println(order_id);
 		model.addAttribute("orderid", order_id);
 		model.addAttribute("menu", iMenuRepo.findAll());
+		List<itemsquantity> showitem = new ArrayList<>();
+		Orders cust_order = iOrderRepo.findAllBy_id(order_id);
+		Map<String, Map<String, Integer>> itemsid = cust_order.getItemsid();
+		itemsquantity iq = new itemsquantity();
+		for (String key : itemsid.keySet()) {
+	        System.out.println(key + ":" + itemsid.get(key));
+	        iq = new itemsquantity();
+	        Menu itemprice = findprices(new ObjectId(key));
+	        iq.setItem(itemprice.getItem());
+	        iq.setPrice((float) (itemprice.getPrice()*itemsid.get(key).get("quantity")));
+	        totalprice+=(float) (itemprice.getPrice()*itemsid.get(key).get("quantity"));
+	        iq.setQuantity(itemsid.get(key).get("quantity"));
+	        showitem.add(iq);
+	    }
+		model.addAttribute("items", showitem);
+		model.addAttribute("totalprice", totalprice);
+		System.out.println(itemsid);
+		System.out.println(showitem);
 		return "orders";
 	}
 	
@@ -202,8 +262,14 @@ public class WaiterController {
 		return null;
 	}
 	
+	@GetMapping("/payment")
+	public String payment(Model model, HttpServletRequest req) {
+
+		return "payment";
+	}
+	
 	@GetMapping("/logout")
-	public String waiterLogout(Model model, HttpServletRequest req) {
+	public String waiterLogout(@RequestParam("split") Integer split,@RequestParam("totalprice") Integer totalprice,Model model, HttpServletRequest req) {
 		req.getSession().invalidate();
 		return "redirect:/home";
 	}

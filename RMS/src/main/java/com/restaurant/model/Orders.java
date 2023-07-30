@@ -1,11 +1,10 @@
 package com.restaurant.model;
 
-import java.time.LocalDate;
+import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +20,6 @@ public class Orders {
 	private ObjectId _id;
 	private ObjectId reservedid;
 	private ObjectId waiter_id;
-	private Object itemsid;
+	private Map itemsid;
 
 }

@@ -61,31 +61,66 @@ body {
 		<div class="text-center"></div>
 		<div class="row">
 			<div class="col-md-7">
-			<div class="card border-0">
+				<div class="card border-0">
 					<div class="card-body">
 						<div class="container-fluid">
-						<br><br><br>
+							<br>
 							<table class="table">
 								<thead>
-									<tr >
-										<th style="font-family: cursive;color: black;font-size:160%;">Items</th>
-										<th style="font-family: cursive;color: black;font-size:160%;">Quantity</th>
-										<th style="font-family: cursive;color: black;font-size:160%;">Price</th>
+									<tr>
+										<th
+											style="font-family: cursive; color: black; font-size: 160%;">Items</th>
+										<th
+											style="font-family: cursive; color: black; font-size: 160%;">Quantity</th>
+										<th
+											style="font-family: cursive; color: black; font-size: 160%;">Price</th>
 									</tr>
 								</thead>
-								
+
 								<tbody>
-								
-									<tr  th:each="table : ${allTables}">
-										<td style="font-family: cursive;color: black;font-size:120%;" th:text="${table.getTableNumber()}"></td>
-										<td style="font-family: cursive;color: black;font-size:120%;" th:text="${table.getCapacity()}"></td>
-										
+
+									<tr th:each="item : ${items}">
+										<td
+											style="font-family: cursive; color: black; font-size: 120%;"
+											th:text="${item.getItem()}"></td>
+										<td
+											style="font-family: cursive; color: black; font-size: 120%;"
+											th:text="${item.getQuantity()}"></td>
+										<td
+											style="font-family: cursive; color: black; font-size: 120%;"
+											th:text="${item.getPrice()}"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
+				<h1
+					style="font-family: cursive; font-size: xx-large; color: #007bff;"
+					class="text-center">
+					Total Price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<span
+						style="font-family: cursive; font-size: xx-large; color: #007bff; margin-left: 50px"
+						th:text="${totalprice}" class="text-center"></span>
+				</h1>
+				<br>
+				<div class="form-inline">
+					<span
+						style="font-family: cursive; font-size: x-large; color: black; font-size: 160%; margin-left: 55px">No
+						of Splits <input required="required" type="number"
+						autofocus="autofocus" class="form-control "
+						style="font-family: cursive; color: black; font-size: 120%; margin-left: 30px"
+						id="split" name="split" />
+					</span>
+				</div>
+				<br> <br>
+				<center>
+					<a
+						th:href="@{payment?split={split}&totalprice={totalprice}(totalprice=${totalprice},split=${split})}"><button
+							type="submit" class="btn btn-primary ">
+							<h4
+								style="font-family: cursive; font-size: x-large; color: white; font-size: 170%;">&nbsp;&nbsp;&nbsp;Payment&nbsp;&nbsp;&nbsp;</h4>
+						</button></a>
+				</center>
 			</div>
 			<div class="col-md-5 mt-5">
 				<h1
@@ -106,11 +141,11 @@ body {
 									<div class="form-group">
 										<span
 											style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Item</span>
-										
-											<select
-											required="required" autofocus
+
+										<select required="required" autofocus
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
-											style="font-family: cursive; color: black; font-size: 120%;" id="itemid" name="itemid">
+											style="font-family: cursive; color: black; font-size: 120%;"
+											id="itemid" name="itemid">
 											<option value="0">select option</option>
 											<option th:each="mu : ${menu}" th:value="${mu.get_id()}"
 												th:text="${mu.getItem()}"></option>
