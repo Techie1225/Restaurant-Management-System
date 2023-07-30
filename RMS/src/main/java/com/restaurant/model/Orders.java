@@ -19,6 +19,7 @@ public class Orders {
 	
 	@Id
 	private ObjectId _id;
+	private ObjectId reserved_id;
 	private ObjectId waiter_id;
 //	private 
 

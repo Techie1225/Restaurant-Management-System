@@ -38,13 +38,13 @@
 }
 
 .bg-img {
-	background-image:
-		url('https://www.dotcom-monitor.com/blog/wp-content/uploads/sites/3/2019/09/authentication_authorization.jpg');
-	height: 100vh;
+	background-image: url("/rms/reservetable.jpg");
+	height: 90.7vh;
 	width: 100%;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
 
 body {
 	overflow: hidden;
@@ -54,7 +54,8 @@ body {
 <body>
 	<div th:insert="navbar :: navbar"></div>
 	<div class="row">
-		<div class="col-md-3"></div>
+		<div class="col-md-6 bg-img">
+		</div>
 		<div class="col-md-6 mt-3">
 
 			<div class="container-fluid">
@@ -62,10 +63,10 @@ body {
 				<div class="text-center">
 
 					<h1
-						style="color: #007bff; font-family: cursive; font-size: xx-large;">Customer</h1>
+						style="color: #007bff; font-family: cursive; font-size: xx-large;">Reserve A Table</h1>
 				</div>
 				<div class="row">
-					<div class="col-md-7 offset-md-3">
+					<div class="col-md-6 offset-md-3">
 						<div class="card border-0 m-0 p-0">
 							<div class="card-body">
 
@@ -73,26 +74,43 @@ body {
 									<!--  	<h3 class="text-center" style="color: red;">{{message}}</h3> -->
 									<h4 style="padding-bottom:5px;font-family: cursive;" th:style="|${color == 'red' ? 'color: red;' : 'color: green;'}|" th:text="${msg}"></h4>
 								</div>
-								<form th:action="@{login}" th:object="${Customer}"
+								<form th:action="@{reserve}" th:object="${Customer}"
 									method="POST">
 									<div class="form-group">
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Username</span> <input type="email" required="required"
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Name</span> <input type="text" required="required"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
-											id="email" aria-describedby="emailHelp" name="email"
+											style="font-family: cursive;font-size: x-large;color: black;font-size:100%;"
+											id="text" name="name"
 											autofocus>
 									</div>
-									<br>
 									<div class="form-group">
 
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Password</span> <input
-											required="required" type="password"
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Phone Number</span> <input
+											required="required" type="number"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0"
-											id="password" name="password" /> <br>
+											style="font-family: cursive;font-size: x-large;color: black;font-size:100%;"
+											id="phone" name="phone" /> 
+									</div>
+									<div class="form-group">
+
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">No of People</span> <input
+											required="required" type="text"
+											class="form-control mt-2 border-left-0 border-top-0 border-right-0"
+											style="font-family: cursive;font-size: x-large;color: black;font-size:100%;"
+											id="no_of_people" name="no_of_people" />
+									</div>
+									<div class="form-group">
+
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">To Date</span> <input
+											required="required" type="datetime-local"
+											class="form-control mt-2 border-left-0 border-top-0 border-right-0"
+											style="font-family: cursive;font-size: x-large;color: black;font-size:100%;"
+											id="to_date" name="to_date" /> 
 									</div>
 									<br>
 									<center>
 										<button type="submit" class="btn btn-primary btn-block">
-											<h4 style="font-family: cursive;font-size: x-large;color: white;font-size:170%;">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</h4>
+											<h4 style="font-family: cursive;font-size: x-large;color: white;font-size:170%;">&nbsp;&nbsp;&nbsp;Reserve&nbsp;&nbsp;&nbsp;</h4>
 										</button>
 									</center>
 									<br>
@@ -100,13 +118,6 @@ body {
 
 
 								</form>
-								<hr style="height: 10px;">
-								<center>
-									<a href="register" class="btn btn-success ">
-										<h4>&nbsp;&nbsp;Create New Account&nbsp;&nbsp;</h4>
-									</a>
-
-								</center>
 							</div>
 
 						</div>

@@ -42,7 +42,8 @@ button {
 	border: 1px solid #2d63c8;
 	padding: 15px 50px;
 	cursor: pointer;
-	width: 250px;
+	width: 150px;
+	margin-left: 50px;
 }
 
 button:hover {
@@ -64,46 +65,32 @@ a {
 	<div th:insert="navbar :: navbar"></div>
 	<div class="container-fluid">
 		<div class="row">
-		<div class="col-md-1"></div>
 			<div class="col-md-7 bg-img" ></div>
-			<div class="col-md-4 mt-5" style="padding-left: 70px;padding-right: 50px">
-				<h1
-					style="font-family: cursive; font-size: xx-large; color: #007bff;"
-					class="text-center">Order Table</h1>
+			<div class="col-md-5">
 				<div class="card border-0">
 					<div class="card-body">
-
-						<div class="container">
-							<h4 style="color: red; padding-bottom: 5px; font-family: cursive"
-								th:text="${msg}"></h4>
+						<div class="container-fluid">
+						<br><br><br>
+							<table class="table">
+								<thead>
+									<tr >
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Name</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Table</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Assign</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+								
+									<tr  th:each="table : ${NR}">
+										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getName()}"></td>
+										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTable()}"></td>
+										<td><a th:href="@{assignTable?res_table_id={res_table_id}&waiter_id={waiter_id}(waiter_id=${waiter_id},res_table_id=${table.getReserved_id()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
-						<form th:action="@{login}" th:object="${Admin}" method="POST">
-							<div class="form-group">
-								<span
-									style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Table Number</span>
-								<input
-									style="font-family: cursive; color: black; font-size: 120%;"
-									type="text" required="required"
-									class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1.5"
-									id="table_number" aria-describedby="emailHelp" name="table_number"
-									autofocus>
-							</div>
-							<br>
-							<br>
-							<center>
-								<button type="submit" class="btn btn-primary btn-block">
-									<h4
-										style="font-family: cursive; font-size: x-large; color: white; font-size: 170%;">&nbsp;&nbsp;&nbsp;Assign&nbsp;&nbsp;&nbsp;</h4>
-								</button>
-							</center>
-							<br>
-
-
-
-						</form>
-
 					</div>
-
 				</div>
 			</div>
 

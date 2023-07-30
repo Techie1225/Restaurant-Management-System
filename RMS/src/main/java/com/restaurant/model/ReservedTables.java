@@ -1,7 +1,7 @@
 package com.restaurant.model;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -20,8 +20,8 @@ public class ReservedTables {
 	
 	@Id
 	private ObjectId _id;
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	private Date to_date;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+	private LocalDateTime to_date;
 	private ObjectId customer_id;
 	private ObjectId waiter_id;
 	private ObjectId reserved_table_id;
