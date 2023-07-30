@@ -21,6 +21,7 @@ import com.restaurant.model.ReservedTables;
 import com.restaurant.model.Waiter;
 import com.restaurant.model.orderItems;
 import com.restaurant.repo.ICustomerRepo;
+import com.restaurant.repo.IOrdersRepo;
 import com.restaurant.repo.IReservedTablesRepo;
 import com.restaurant.repo.ITableRepo;
 import com.restaurant.service.OdersService;
@@ -38,6 +39,9 @@ public class WaiterController {
 	
 	@Autowired
 	private ICustomerRepo iCustomerRepo;
+	
+	@Autowired
+	private IOrdersRepo iOrderRepo;
 	
 	@Autowired
 	private IReservedTablesRepo iReservedTablesRepo;
@@ -91,6 +95,7 @@ public class WaiterController {
 	public String home(HttpSession session, Model model,@ModelAttribute("waiter_id") Object waiter_id) {
 		System.out.println(waiter_id);
 		session.setAttribute("role", "Waiter");
+		session.setAttribute("waiter_id", waiter_id);
 		List<ReservedTables> li = waiterService.findAllTables();
 		List<ReservedTab> lires = new ArrayList<ReservedTab>();
 //		model.addAttribute("NR",li);
@@ -100,7 +105,7 @@ public class WaiterController {
 		ReservedTab rtd ;
 		for(ReservedTables rt : li) {
 			rtd = new ReservedTab();
-			rtd.setReserved_id(rt.get_id());
+			rtd.setReservedid(rt.get_id());
 			rtd.setName(cust_name(rt.getCustomer_id()));
 			rtd.setTable(table_number(rt.getReserved_table_id()));
 			lires.add(rtd);
@@ -125,7 +130,7 @@ public class WaiterController {
 		reservedTables.setWaiter_id(waiter_id);
 		iReservedTablesRepo.save(reservedTables);
 		Orders order = new Orders();
-		order.setReserved_id(res_table_id);
+		order.setReservedid(res_table_id);
 		order.setWaiter_id(waiter_id);
 		ObjectId orderid = odersService.saveOrders(order);
 		model.addAttribute("orde_id", orderid);
@@ -136,7 +141,51 @@ public class WaiterController {
 	public String oderitem(HttpSession session, Model model,orderItems orderItems) {
 		System.out.println("------------------------");
 		System.out.println(orderItems);
-		return "";
+		model.addAttribute("msg", "ordered Successfully");
+		return "orders";
+	}
+	
+	@GetMapping("inorders")
+	public String inorders(HttpSession session, Model model) {
+		System.out.println("------------------------");
+		return "orders";
+	}
+	
+	@GetMapping("assignedtable")
+	public String assigntable(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("waiter_id");
+		Iterable<ReservedTables> allreserved = iReservedTablesRepo.findAll();
+		List<ReservedTab> lires = new ArrayList<ReservedTab>();
+		ReservedTab rtd ;
+		for(ReservedTables rt : allreserved) {
+			if(rt.getWaiter_id()!=null && rt.getWaiter_id().toString().equals(id)) {
+					rtd = new ReservedTab();
+					rtd.setReservedid(rt.get_id());
+					rtd.setOrderid(findorder(rt.get_id()));
+					rtd.setName(cust_name(rt.getCustomer_id()));
+					rtd.setTable(table_number(rt.getReserved_table_id()));
+					lires.add(rtd);
+				}
+				
+			}
+		System.out.println(lires);
+		model.addAttribute("NR",lires);
+		return "assignedtable";
+	}
+	
+	private ObjectId findorder(ObjectId id) {
+		System.out.println("--------------------------------------");
+		System.out.println(id);
+		for(Orders od : iOrderRepo.findAll())
+		{
+			System.out.println(od);
+			if(od.getReservedid().toString().equals(id.toString())) {
+				System.out.println("innnnnnnn");
+				return od.get_id();
+				
+			}
+		}
+		return null;
 	}
 	
 	@GetMapping("/logout")

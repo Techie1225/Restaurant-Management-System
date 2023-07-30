@@ -65,8 +65,8 @@ a {
 	<div th:insert="navbar :: navbar"></div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-7 bg-img" ></div>
-			<div class="col-md-5">
+
+			<div class="col-md-10">
 				<div class="card border-0">
 					<div class="card-body">
 						<div class="container-fluid">
@@ -85,7 +85,7 @@ a {
 									<tr  th:each="table : ${NR}">
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getName()}"></td>
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTable()}"></td>
-										<td><a th:href="@{assignTable?res_table_id={res_table_id}&waiter_id={waiter_id}(waiter_id=${waiter_id},res_table_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>
+										<td><a th:href="@{orderitem?order_id={order_id}(order_id=${table.getOrderid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>
 									</tr>
 								</tbody>
 							</table>

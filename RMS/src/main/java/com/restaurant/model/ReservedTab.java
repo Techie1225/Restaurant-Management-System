@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReservedTab {
 	
-	private ObjectId reserved_id;
+	private ObjectId reservedid;
+	private ObjectId orderid;
 	private String name;
 	private String table;
 
