@@ -43,7 +43,7 @@ button {
 	padding: 15px 50px;
 	cursor: pointer;
 	width: 150px;
-	margin-left: 50px;
+
 }
 
 button:hover {
@@ -76,7 +76,7 @@ a {
 									<tr >
 										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Name</th>
 										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Table</th>
-										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Assign</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Served</th>
 									</tr>
 								</thead>
 								
@@ -85,7 +85,7 @@ a {
 									<tr  th:each="table : ${NR}">
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getName()}"></td>
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTable()}"></td>
-										<td><a th:href="@{orderitem?order_id={order_id}(order_id=${table.getOrderid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>
+										<td><center><a th:href="@{inorders?order_id={order_id}(order_id=${table.getOrderid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Served</button></a></center></td>
 									</tr>
 								</tbody>
 							</table>

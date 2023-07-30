@@ -34,8 +34,7 @@
 }
 
 .bg-img {
-	background-image:
-		url('/rms/item.gif"');
+	background-image: url('/rms/item.gif"');
 	height: 100vh;
 	width: 100%;
 	background-repeat: no-repeat;
@@ -57,44 +56,84 @@ body {
 
 </head>
 <body>
-<div th:insert="navbar :: navbar"></div>
+	<div th:insert="navbar :: navbar"></div>
 	<div class="container-fluid">
 		<div class="text-center"></div>
 		<div class="row">
-			<div class="col-md-7" id="bg-img"></div>
-			<div class="col-md-5 mt-5">
-				<h1 style="font-family: cursive; font-size: xx-large; color: #007bff;" class="text-center" >order Item</h1>
-					<div class="row">
-					<div class="col-md-8 offset-md-3">
-				<div class="card border-0">
+			<div class="col-md-7">
+			<div class="card border-0">
 					<div class="card-body">
-
-						<div class="container">
-							<h4 style="color: green; padding-bottom: 5px; font-family: cursive"
-								th:text="${msg}"></h4>
+						<div class="container-fluid">
+						<br><br><br>
+							<table class="table">
+								<thead>
+									<tr >
+										<th style="font-family: cursive;color: black;font-size:160%;">Items</th>
+										<th style="font-family: cursive;color: black;font-size:160%;">Quantity</th>
+										<th style="font-family: cursive;color: black;font-size:160%;">Price</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+								
+									<tr  th:each="table : ${allTables}">
+										<td style="font-family: cursive;color: black;font-size:120%;" th:text="${table.getTableNumber()}"></td>
+										<td style="font-family: cursive;color: black;font-size:120%;" th:text="${table.getCapacity()}"></td>
+										
+									</tr>
+								</tbody>
+							</table>
 						</div>
-							<form th:action="@{orderitem}" th:object="${orderItems}" method="Get">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5 mt-5">
+				<h1
+					style="font-family: cursive; font-size: xx-large; color: #007bff;"
+					class="text-center">order Item</h1>
+				<div class="row">
+					<div class="col-md-8 offset-md-3">
+						<div class="card border-0">
+							<div class="card-body">
+
+								<div class="container">
+									<h4
+										style="color: green; padding-bottom: 5px; font-family: cursive"
+										th:text="${msg}"></h4>
+								</div>
+								<form th:action="@{orderitem}" th:object="${orderItems}"
+									method="Get">
 									<div class="form-group">
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Item</span> <input type="text" required="required"
+										<span
+											style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Item</span>
+										
+											<select
+											required="required" autofocus
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
-											style="font-family: cursive;color: black;font-size:120%;" id="item" name="item"
-											autofocus>
+											style="font-family: cursive; color: black; font-size: 120%;" id="itemid" name="itemid">
+											<option value="0">select option</option>
+											<option th:each="mu : ${menu}" th:value="${mu.get_id()}"
+												th:text="${mu.getItem()}"></option>
+										</select>
 									</div>
 									<br>
 									<div class="form-group">
 
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Quantity</span> <input
-											required="required" type="number" style="font-family: cursive;color: black;font-size:120%;"
+										<span
+											style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Quantity</span>
+										<input required="required" type="number"
+											style="font-family: cursive; color: black; font-size: 120%;"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0"
 											id="quantity" name="quantity" /> <br>
 									</div>
 									<div>
-									<input hidden >
+										<input type="hidden" name="id" th:value="${orderid}">
 									</div>
 									<br>
 									<center>
 										<button type="submit" class="btn btn-primary btn-block">
-											<h4 style="font-family: cursive;font-size: x-large;color: white;font-size:170%;">&nbsp;&nbsp;&nbsp;order&nbsp;&nbsp;&nbsp;</h4>
+											<h4
+												style="font-family: cursive; font-size: x-large; color: white; font-size: 170%;">&nbsp;&nbsp;&nbsp;order&nbsp;&nbsp;&nbsp;</h4>
 										</button>
 									</center>
 									<br>
@@ -104,8 +143,8 @@ body {
 								</form>
 							</div>
 
-				</div>
-				</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

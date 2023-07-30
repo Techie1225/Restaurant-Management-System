@@ -1,5 +1,7 @@
 package com.restaurant.model;
 
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class orderItems {
-	private String item;
+	private ObjectId id;
+	private String itemid;
 	private Integer quantity;
 }

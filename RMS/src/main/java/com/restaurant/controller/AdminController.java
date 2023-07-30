@@ -73,18 +73,24 @@ public class AdminController {
 		System.out.println(menu);
 		menu.setItem(menu.getItem().toUpperCase());
 		Optional<Menu> check = itemService.findByitem(menu.getItem());
-		Iterable<Menu> allItems = itemService.findAllitems();
+		Iterable<Menu> allItems;
 		System.out.println(check);
 		if (check.isPresent()) {
-			model.addAttribute("msg", "Item Already Added!!...");
-			model.addAttribute("color", "red");
+			Menu updateitem = check.get();
+			updateitem.setPrice(menu.getPrice());
+			itemService.saveItem(updateitem);
+			System.out.println(check);
+			model.addAttribute("msg", "Item Updated Successfully!!...");
+			model.addAttribute("color", "green");
+			allItems = itemService.findAllitems();
 			model.addAttribute("allItems", allItems);
 			return "item";
 		} else {
 			model.addAttribute("msg", "Item added Successfully!!...");
 			model.addAttribute("color", "green");
-			model.addAttribute("allItems", allItems);
 			itemService.saveItem(menu);
+			allItems = itemService.findAllitems();
+			model.addAttribute("allItems", allItems);
 			return "item";
 		}
 	}
@@ -102,11 +108,16 @@ public class AdminController {
 		System.out.println(table);
 		table.setStatus("Not Occupied");
 		Optional<Tables> check = tableService.findByTableNumber(table.getTableNumber());
-		Iterable<Tables> allTables = tableService.findAllTables();
+		Iterable<Tables> allTables ;
 		System.out.println(check);
 		if (check.isPresent()) {
-			model.addAttribute("msg", "Table Already Added!!...");
-			model.addAttribute("color", "red");
+			System.out.println(check);
+			Tables updatetable = check.get();
+			updatetable.setCapacity(table.getCapacity());
+			tableService.saveItem(updatetable);
+			model.addAttribute("msg", "Table Updated Successfully!!...");
+			model.addAttribute("color", "green");
+			allTables = tableService.findAllTables();
 			model.addAttribute("allTables", allTables);
 			return "viewTables";
 		} else {

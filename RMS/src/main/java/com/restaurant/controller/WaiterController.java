@@ -21,6 +21,7 @@ import com.restaurant.model.ReservedTables;
 import com.restaurant.model.Waiter;
 import com.restaurant.model.orderItems;
 import com.restaurant.repo.ICustomerRepo;
+import com.restaurant.repo.IMenuRepo;
 import com.restaurant.repo.IOrdersRepo;
 import com.restaurant.repo.IReservedTablesRepo;
 import com.restaurant.repo.ITableRepo;
@@ -48,6 +49,9 @@ public class WaiterController {
 	
 	@Autowired
 	private ITableRepo iTableRepo;
+	
+	@Autowired
+	private IMenuRepo iMenuRepo;
 	
 	@Autowired
 	private OdersService odersService;
@@ -78,11 +82,13 @@ public class WaiterController {
 	}
 	
 	@PostMapping("login")
-	public String waiterLogin1(Waiter waiter, Model model, HttpServletRequest req,RedirectAttributes redirectAttributes) {
+	public String waiterLogin1(Waiter waiter, Model model, HttpServletRequest req,RedirectAttributes redirectAttributes,HttpSession session) {
 		System.out.println(waiter);
 		Optional<Waiter> obj = waiterService.findByUsernameAndPassword(waiter.getUsername(), waiter.getPassword());
 		if (obj.isPresent()) {
 			redirectAttributes.addAttribute("waiter_id", obj.get().get_id());
+			session.setAttribute("role", "Waiter");
+			session.setAttribute("waiter_id",  obj.get().get_id().toString());
 			return "redirect:/waiter/home";
 		} else {
 			model.addAttribute("msg", "Invalid Login Credentials");
@@ -92,14 +98,15 @@ public class WaiterController {
 	}
 	
 	@GetMapping("home")
-	public String home(HttpSession session, Model model,@ModelAttribute("waiter_id") Object waiter_id) {
-		System.out.println(waiter_id);
-		session.setAttribute("role", "Waiter");
-		session.setAttribute("waiter_id", waiter_id);
+	public String home(HttpSession session,Model model) {
+//		if(session.getAttribute("role")==null) {
+//			System.out.println("in sesssionnnn");
+//			
+//		}
 		List<ReservedTables> li = waiterService.findAllTables();
 		List<ReservedTab> lires = new ArrayList<ReservedTab>();
 //		model.addAttribute("NR",li);
-		model.addAttribute("waiter_id", waiter_id);
+		model.addAttribute("waiter_id", session.getAttribute("waiter_id"));
 //		model.addAttribute("cust_name",cust_name(null));
 //		model.addAttribute("table",table_number(null));
 		ReservedTab rtd ;
@@ -133,7 +140,8 @@ public class WaiterController {
 		order.setReservedid(res_table_id);
 		order.setWaiter_id(waiter_id);
 		ObjectId orderid = odersService.saveOrders(order);
-		model.addAttribute("orde_id", orderid);
+		model.addAttribute("orderid", orderid);
+		model.addAttribute("menu", iMenuRepo.findAll());
 		return "orders";
 	}
 	
@@ -141,13 +149,20 @@ public class WaiterController {
 	public String oderitem(HttpSession session, Model model,orderItems orderItems) {
 		System.out.println("------------------------");
 		System.out.println(orderItems);
+		Orders cust_order = iOrderRepo.findAllBy_id(orderItems.getId());
+		System.out.println(cust_order);
+//		Map<"String","Integer"> itemmap = {orderItems.getItemid():orderItems.g
+		model.addAttribute("orderid", orderItems.getId());
 		model.addAttribute("msg", "ordered Successfully");
+		model.addAttribute("menu", iMenuRepo.findAll());
 		return "orders";
 	}
 	
 	@GetMapping("inorders")
-	public String inorders(HttpSession session, Model model) {
-		System.out.println("------------------------");
+	public String inorders(@RequestParam("order_id") ObjectId order_id,Model model,HttpSession session) {
+		System.out.println(order_id);
+		model.addAttribute("orderid", order_id);
+		model.addAttribute("menu", iMenuRepo.findAll());
 		return "orders";
 	}
 	
@@ -182,7 +197,6 @@ public class WaiterController {
 			if(od.getReservedid().toString().equals(id.toString())) {
 				System.out.println("innnnnnnn");
 				return od.get_id();
-				
 			}
 		}
 		return null;

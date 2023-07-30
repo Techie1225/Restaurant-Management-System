@@ -9,4 +9,6 @@ import com.restaurant.model.Orders;
 @Repository
 public interface IOrdersRepo extends CrudRepository<Orders, Integer> {
 	Orders findByreservedid(ObjectId id);
+
+	Orders findAllBy_id(ObjectId id);
 }
