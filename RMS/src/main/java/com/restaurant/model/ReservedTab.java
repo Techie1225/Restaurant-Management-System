@@ -15,5 +15,6 @@ public class ReservedTab {
 	private ObjectId orderid;
 	private String name;
 	private String table;
+	private ObjectId custid;
 
 }

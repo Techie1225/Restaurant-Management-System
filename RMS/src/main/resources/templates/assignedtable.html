@@ -85,7 +85,7 @@ a {
 									<tr  th:each="table : ${NR}">
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getName()}"></td>
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTable()}"></td>
-										<td><center><a th:href="@{inorders?order_id={order_id}(order_id=${table.getOrderid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Served</button></a></center></td>
+										<td><center><a th:href="@{inorders?order_id={order_id}&cust_id={cust_id}(order_id=${table.getOrderid()},cust_id=${table.getCustid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Served</button></a></center></td>
 									</tr>
 								</tbody>
 							</table>

@@ -70,44 +70,43 @@ a {
 					<h2 style="color: #007bff; margin-top: 15px; text-align: center;">Payment
 					</h2>
 					<br>
-					<form th:action="@{payment}" th:object="${payment}"
+					<form th:action="@{payment}" th:object="${Payment}"
 						method="Post">
-						<input type="hidden" name="customer_id" value="${customer_id}">
-						<input type="hidden" name="order_id" value="${order_id}">
+						
 						<div class="form-group">
 							<span
 								style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Card Number</span>
-							<input type="email" required="required"
+							<input type="number" required="required"
 								class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
 								style="font-family: cursive; color: black; font-size: 120%;"
-								id="email" aria-describedby="emailHelp" name="username"
+								id="card_number"  name="card_number"
 								autofocus>
 						</div>
 						<div class="form-group">
 							<span
 								style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Cvv</span>
-							<input type="email" required="required"
+							<input type="number" required="required"
 								class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
 								style="font-family: cursive; color: black; font-size: 120%;"
-								id="email" aria-describedby="emailHelp" name="username"
+								id="cvv" name="cvv"
 								autofocus>
 						</div>
 						<div class="form-group">
 							<span
 								style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Expiry Date</span>
-							<input type="email" required="required"
+							<input type="text" required="required"
 								class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
 								style="font-family: cursive; color: black; font-size: 120%;"
-								id="email" aria-describedby="emailHelp" name="username"
+								id="expire_date" name="expire_date"
 								autofocus>
 						</div>
 						<div class="form-group">
 							<span
 								style="font-family: cursive; font-size: x-large; color: black; font-size: 160%;">Holder Name</span>
-							<input type="email" required="required"
+							<input type="text" required="required"
 								class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
 								style="font-family: cursive; color: black; font-size: 120%;"
-								id="email" aria-describedby="emailHelp" name="username"
+								id="holder_name" name="holder_name"
 								autofocus>
 						</div>
 						<br>
