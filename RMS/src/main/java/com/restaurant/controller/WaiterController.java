@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.restaurant.model.Billing;
 import com.restaurant.model.Menu;
 import com.restaurant.model.Orders;
 import com.restaurant.model.ReservedTab;
@@ -23,6 +24,7 @@ import com.restaurant.model.ReservedTables;
 import com.restaurant.model.Waiter;
 import com.restaurant.model.itemsquantity;
 import com.restaurant.model.orderItems;
+import com.restaurant.repo.IBillRepo;
 import com.restaurant.repo.ICustomerRepo;
 import com.restaurant.repo.IMenuRepo;
 import com.restaurant.repo.IOrdersRepo;
@@ -55,6 +57,9 @@ public class WaiterController {
 	
 	@Autowired
 	private IMenuRepo iMenuRepo;
+	
+	@Autowired
+	private IBillRepo iBillRepo;
 	
 	@Autowired
 	private OdersService odersService;
@@ -263,13 +268,24 @@ public class WaiterController {
 	}
 	
 	@GetMapping("/payment")
-	public String payment(Model model, HttpServletRequest req) {
-
+	public String payment(@RequestParam("split") String split,@RequestParam("totalprice") String totalprice,Model model, HttpServletRequest req) {
+		System.out.println(split);
+		System.out.println(totalprice);
+		Billing bill = new Billing();
+		bill.setAmount( Float.parseFloat(totalprice));
+		bill.setSplit(Integer.parseInt(split));
+		iBillRepo.save(bill);
 		return "payment";
 	}
 	
+	@RequestMapping("/payment")
+	public String payment1(Model model, HttpServletRequest req) {
+		
+		return "";
+	}
+	
 	@GetMapping("/logout")
-	public String waiterLogout(@RequestParam("split") Integer split,@RequestParam("totalprice") Integer totalprice,Model model, HttpServletRequest req) {
+	public String waiterLogout(Model model, HttpServletRequest req) {
 		req.getSession().invalidate();
 		return "redirect:/home";
 	}

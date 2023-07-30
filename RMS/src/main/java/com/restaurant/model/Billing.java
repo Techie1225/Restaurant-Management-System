@@ -15,7 +15,7 @@ public class Billing {
 	@Id
 	private ObjectId _id;
 	private ObjectId order_id;
-	private Integer amount;
+	private Float amount;
 	private Integer split;
 
 }

@@ -103,6 +103,8 @@ body {
 						th:text="${totalprice}" class="text-center"></span>
 				</h1>
 				<br>
+				<form th:action="@{payment}" method="Get">
+				<input type="hidden" th:value="${totalprice}" name="totalprice">
 				<div class="form-inline">
 					<span
 						style="font-family: cursive; font-size: x-large; color: black; font-size: 160%; margin-left: 55px">No
@@ -114,12 +116,12 @@ body {
 				</div>
 				<br> <br>
 				<center>
-					<a
-						th:href="@{payment?split={split}&totalprice={totalprice}(totalprice=${totalprice},split=${split})}"><button
+					<button
 							type="submit" class="btn btn-primary ">
 							<h4
 								style="font-family: cursive; font-size: x-large; color: white; font-size: 170%;">&nbsp;&nbsp;&nbsp;Payment&nbsp;&nbsp;&nbsp;</h4>
-						</button></a>
+						</button>
+						</form>
 				</center>
 			</div>
 			<div class="col-md-5 mt-5">
