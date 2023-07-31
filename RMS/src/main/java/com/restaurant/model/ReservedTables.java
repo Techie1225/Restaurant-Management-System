@@ -22,8 +22,9 @@ public class ReservedTables {
 	private ObjectId _id;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	private LocalDateTime to_date;
-	private ObjectId customer_id;
+	private ObjectId customerid;
 	private ObjectId waiter_id;
 	private ObjectId reserved_table_id;
+	private String status;
 
 }

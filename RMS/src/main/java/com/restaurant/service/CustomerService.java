@@ -38,7 +38,7 @@ public class CustomerService {
 		 if(table_id!=null) {
 			 reservedTables.setReserved_table_id(table_id);
 			 ObjectId customer_id = iCustomerRepo.save(customer).get_id();
-			 reservedTables.setCustomer_id(customer_id);
+			 reservedTables.setCustomerid(customer_id);
 			 ObjectId reserve_id = iReservedTablesRepo.save(reservedTables).get_id();
 			 return reserve_id;
 		 }

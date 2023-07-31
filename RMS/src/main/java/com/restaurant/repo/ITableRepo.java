@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.restaurant.model.Tables;
 
 @Repository
-public interface ITableRepo extends CrudRepository<Tables, String> {
+public interface ITableRepo extends CrudRepository<Tables, ObjectId> {
 
 	Optional<Tables> findByTableNumber(String table_number);
 

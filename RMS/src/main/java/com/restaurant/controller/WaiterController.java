@@ -22,6 +22,7 @@ import com.restaurant.model.Orders;
 import com.restaurant.model.Payment;
 import com.restaurant.model.ReservedTab;
 import com.restaurant.model.ReservedTables;
+import com.restaurant.model.Tables;
 import com.restaurant.model.Waiter;
 import com.restaurant.model.itemsquantity;
 import com.restaurant.model.orderItems;
@@ -86,7 +87,7 @@ public class WaiterController {
 			model.addAttribute("msg", "Registered Successfully!!...");
 			model.addAttribute("color", "green");
 			waiterService.saveCustomer(waiter);
-			return "waiterLogin";
+			return "waiterRegistration";
 		}
 	}
 
@@ -128,7 +129,7 @@ public class WaiterController {
 		for (ReservedTables rt : li) {
 			rtd = new ReservedTab();
 			rtd.setReservedid(rt.get_id());
-			rtd.setName(cust_name(rt.getCustomer_id()));
+			rtd.setName(cust_name(rt.getCustomerid()));
 			rtd.setTable(table_number(rt.getReserved_table_id()));
 			lires.add(rtd);
 		}
@@ -256,16 +257,19 @@ public class WaiterController {
 	public String assigntable(HttpSession session, Model model) {
 		String id = (String) session.getAttribute("waiter_id");
 		Iterable<ReservedTables> allreserved = iReservedTablesRepo.findAll();
+		System.out.println(allreserved);
 		List<ReservedTab> lires = new ArrayList<ReservedTab>();
 		ReservedTab rtd;
 		for (ReservedTables rt : allreserved) {
-			if (rt.getWaiter_id() != null && rt.getWaiter_id().toString().equals(id)) {
+			if (rt.getWaiter_id() != null && rt.getWaiter_id().toString().equals(id) && rt.getStatus()==null) {
+				System.out.println("customerrrrrrrrrrrrrrrrrrrrrrrrrr");
+				System.out.println(rt.getCustomerid());
 				rtd = new ReservedTab();
 				rtd.setReservedid(rt.get_id());
 				rtd.setOrderid(findorder(rt.get_id()));
-				rtd.setName(cust_name(rt.getCustomer_id()));
+				rtd.setName(cust_name(rt.getCustomerid()));
 				rtd.setTable(table_number(rt.getReserved_table_id()));
-				rtd.setCustid(rt.getCustomer_id());
+				rtd.setCustid(rt.getCustomerid());
 				lires.add(rtd);
 			}
 
@@ -310,6 +314,13 @@ public class WaiterController {
 		payment.setOrder_id(new ObjectId(session.getAttribute("order_id").toString()));
 		System.out.println(payment);
 		iPaymentRepo.save(payment);
+		ReservedTables reservetab = iReservedTablesRepo.findByCustomerid(payment.getCustomer_id());
+		System.out.println(reservetab);
+		reservetab.setStatus("served");
+		iReservedTablesRepo.save(reservetab);
+		Tables tab = iTableRepo.findBy_id(reservetab.getReserved_table_id());
+		tab.setStatus("Not Occupied");
+		iTableRepo.save(tab);
 		return "waiterHome";
 	}
 

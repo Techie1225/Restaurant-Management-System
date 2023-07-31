@@ -70,20 +70,20 @@ body {
 							<div class="card-body">
 
 								<div class="container">
-									<h4 style="color: red;padding-bottom:5px;font-family: cursive;" th:text="${msg}"></h4>
+								<h4 style="padding-bottom:5px;font-family: cursive;" th:style="|${color == 'red' ? 'color: red;' : 'color: green;'}|" th:text="${msg}"></h4>
 								</div>
 								<form th:action="@{register}" th:object="${waiter}" method="POST">
 								<div class="form-group">
 										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Server Name</span> <input type="text" required="required"
 											class="form-control mt-1.5 border-left-0 border-top-0 border-right-0 border-bottom-1.5"
-											id="name" aria-describedby="emailHelp" name="name"
+											id="name" name="name"
 											autofocus>
 									</div>
 									<br>
 									<div class="form-group">
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Email</span> <input type="text" required="required"
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Email</span> <input type="email" required="required"
 											class="form-control mt-1.5 border-left-0 border-top-0 border-right-0 border-bottom-1.5"
-											id="email" aria-describedby="emailHelp" name="email"
+											id="username" aria-describedby="emailHelp" name="username"
 											autofocus>
 									</div>
 									<br>
