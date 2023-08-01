@@ -86,7 +86,7 @@ a {
 									<tr  th:each="table : ${NR}">
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getName()}"></td>
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTable()}"></td>
-										<td><a th:href="@{assignTable?res_table_id={res_table_id}&waiter_id={waiter_id}(waiter_id=${waiter_id},res_table_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>
+										<td><a th:href="@{assignTable?res_table_id={res_table_id}&waiter_id={waiter_id}&cust_id={cust_id}(waiter_id=${waiter_id},res_table_id=${table.getCustid()},cust_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>
 										<td><a th:href="@{removeTable?res_table_id={res_table_id}&waiter_id={waiter_id}(waiter_id=${waiter_id},res_table_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Remove</button></a></td>
 									</tr>
 								</tbody>

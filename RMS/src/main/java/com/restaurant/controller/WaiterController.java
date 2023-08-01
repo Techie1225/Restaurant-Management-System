@@ -131,6 +131,7 @@ public class WaiterController {
 			rtd.setReservedid(rt.get_id());
 			rtd.setName(cust_name(rt.getCustomerid()));
 			rtd.setTable(table_number(rt.getReserved_table_id()));
+			rtd.setCustid(rt.getCustomerid());
 			lires.add(rtd);
 		}
 		model.addAttribute("NR", lires);
@@ -146,7 +147,7 @@ public class WaiterController {
 	}
 
 	@GetMapping("assignTable")
-	public String assignTable(@RequestParam("res_table_id") ObjectId res_table_id,
+	public String assignTable(HttpSession session,@RequestParam("res_table_id") ObjectId res_table_id,@RequestParam("cust_id") ObjectId cust_id,
 			@RequestParam("waiter_id") ObjectId waiter_id, Model model) {
 		System.out.println(res_table_id);
 		System.out.println(waiter_id);
@@ -160,6 +161,8 @@ public class WaiterController {
 		ObjectId orderid = odersService.saveOrders(order);
 		model.addAttribute("orderid", orderid);
 		model.addAttribute("menu", iMenuRepo.findAll());
+		session.setAttribute("order_id", orderid);
+		session.setAttribute("custid", cust_id);
 		return "orders";
 	}
 
