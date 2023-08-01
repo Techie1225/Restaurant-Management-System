@@ -43,7 +43,7 @@ button {
 	padding: 15px 50px;
 	cursor: pointer;
 	width: 150px;
-	margin-left: 50px;
+	
 }
 
 button:hover {
@@ -77,6 +77,7 @@ a {
 										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Name</th>
 										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Table</th>
 										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Assign</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Remove</th>
 									</tr>
 								</thead>
 								
@@ -86,6 +87,7 @@ a {
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getName()}"></td>
 										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTable()}"></td>
 										<td><a th:href="@{assignTable?res_table_id={res_table_id}&waiter_id={waiter_id}(waiter_id=${waiter_id},res_table_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>
+										<td><a th:href="@{removeTable?res_table_id={res_table_id}&waiter_id={waiter_id}(waiter_id=${waiter_id},res_table_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Remove</button></a></td>
 									</tr>
 								</tbody>
 							</table>

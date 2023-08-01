@@ -12,4 +12,6 @@ public interface ICustomerRepo extends CrudRepository<Customer, ObjectId> {
 //	Optional<Customer> findByEmailAndPassword(String email, String password);
 //	Optional<Customer> findFirstByEmailOrPhone(String email, Long phone);
 	Customer findBy_id(ObjectId id);
+
+	void deleteBy_id(ObjectId customerid);
 }

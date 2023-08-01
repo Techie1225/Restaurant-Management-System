@@ -163,6 +163,21 @@ public class WaiterController {
 		return "orders";
 	}
 
+	@GetMapping("removeTable")
+	public String removeTable(@RequestParam("res_table_id") ObjectId res_table_id,
+			@RequestParam("waiter_id") ObjectId waiter_id, Model model) {
+		System.out.println(res_table_id);
+		System.out.println(waiter_id);
+		ReservedTables reservedTables = iReservedTablesRepo.findBy_id(res_table_id);
+//		reservedTables.setWaiter_id(waiter_id);
+		iReservedTablesRepo.delete(reservedTables);
+		iCustomerRepo.deleteBy_id(reservedTables.getCustomerid());
+		Tables tab = iTableRepo.findBy_id(reservedTables.getReserved_table_id());
+		tab.setStatus("Not Occupied");
+		iTableRepo.save(tab);
+		return "redirect:/waiter/home";
+	}
+	
 	@GetMapping("orderitem")
 	public String oderitem(HttpSession session, Model model, orderItems orderItems) {
 		int quantity;
@@ -323,7 +338,7 @@ public class WaiterController {
 		Tables tab = iTableRepo.findBy_id(reservetab.getReserved_table_id());
 		tab.setStatus("Not Occupied");
 		iTableRepo.save(tab);
-		return "waiterHome";
+		return "redirect:/waiter/home";
 	}
 
 	@GetMapping("/logout")
