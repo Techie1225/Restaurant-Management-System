@@ -292,15 +292,17 @@ public class WaiterController {
 		return null;
 	}
 
+//	@RequestParam("split") String split,
 	@GetMapping("/payment")
-	public String payment(@RequestParam("split") String split, @RequestParam("totalprice") String totalprice,
+	public String payment( @RequestParam("totalprice") String totalprice,
 			Model model, HttpServletRequest req, HttpSession session) {
-		System.out.println(split);
+//		System.out.println(split);
 		System.out.println(totalprice);
 		Billing bill = new Billing();
 		bill.setAmount(Float.parseFloat(totalprice));
-		bill.setSplit(Integer.parseInt(split));
+		bill.setSplit(1);
 		bill.setOrder_id(new ObjectId(session.getAttribute("order_id").toString()));
+		
 		ObjectId id = iBillRepo.save(bill).get_id();
 //		session.setAttribute("billid", id);
 

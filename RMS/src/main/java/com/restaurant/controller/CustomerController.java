@@ -76,7 +76,7 @@ public class CustomerController {
 				}
 		    }
 		    else {
-		    	model.addAttribute("msg", "Available from 10 to 22");
+		    	model.addAttribute("msg", "Available from 10 AM to 10 PM");
 				model.addAttribute("color", "red");
 				return "reserveTable";
 		    }
