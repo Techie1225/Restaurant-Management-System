@@ -74,6 +74,12 @@ body {
 											style="font-family: cursive; color: black; font-size: 160%;">Quantity</th>
 										<th
 											style="font-family: cursive; color: black; font-size: 160%;">Price</th>
+											<div th:switch="${session.role}">
+												<div th:case="Admin">
+											<th 
+											style="font-family: cursive; color: black; font-size: 160%;">Remove</th>
+											</div>
+											</div>
 									</tr>
 								</thead>
 
@@ -89,6 +95,11 @@ body {
 										<td
 											style="font-family: cursive; color: black; font-size: 120%;"
 											th:text="${item.getPrice()}"></td>
+											<div th:switch="${session.role}">
+												<div th:case="Admin">
+											<td><a th:href="@{deleteorder?menu_id={menu_id}&reserv_id={reserve_id}(menu_id=${item.get_id()},reserve_id=${item.getReserveid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;margin-left: 16px" class="btn btn-primary">Remove</button></a></td>
+											</div>
+											</div>
 									</tr>
 								</tbody>
 							</table>

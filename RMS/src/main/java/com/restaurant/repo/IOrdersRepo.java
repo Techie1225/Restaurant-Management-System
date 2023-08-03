@@ -11,4 +11,6 @@ public interface IOrdersRepo extends CrudRepository<Orders, ObjectId> {
 	Orders findByreservedid(ObjectId id);
 
 	Orders findAllBy_id(ObjectId id);
+
+	Orders findBy_id(ObjectId objectId);
 }

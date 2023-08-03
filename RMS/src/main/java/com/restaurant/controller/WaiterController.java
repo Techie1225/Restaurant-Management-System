@@ -181,6 +181,22 @@ public class WaiterController {
 		return iCustomerRepo.findBy_id(id).getName();
 	}
 
+	@GetMapping("deleteorder")
+	public String deleteorder(@RequestParam("menu_id") ObjectId menu_id,@RequestParam("reserv_id") ObjectId reserveid){
+//		iCustomerRepo.
+		System.out.println(menu_id);
+		System.out.println(reserveid);
+		Orders ord = iOrderRepo.findBy_id(new ObjectId(reserveid.toString()));
+		System.out.println(ord);
+		Map item = ord.getItemsid();
+		System.out.println(item);
+		item.remove(menu_id.toString());
+		System.out.println(item);
+		ord.setItemsid(item);
+		iOrderRepo.save(ord);
+		return "redirect:/waiter/assignedtable";
+	}
+	
 	@GetMapping("assignTable")
 	public String assignTable(HttpSession session,@RequestParam("res_table_id") ObjectId res_table_id,@RequestParam("cust_id") ObjectId cust_id,
 			@RequestParam("waiter_id") ObjectId waiter_id, Model model) {
@@ -278,6 +294,8 @@ public class WaiterController {
 				iq.setPrice((float) (itemprice.getPrice() * itemsid.get(key).get("quantity")));
 				totalprice += (float) (itemprice.getPrice() * itemsid.get(key).get("quantity"));
 				iq.setQuantity(itemsid.get(key).get("quantity"));
+				iq.set_id(key);
+				iq.setReserveid(order_id.toString());
 				showitem.add(iq);
 			}
 		}
@@ -294,11 +312,30 @@ public class WaiterController {
 
 	@GetMapping("assignedtable")
 	public String assigntable(HttpSession session, Model model) {
-		String id = (String) session.getAttribute("waiter_id");
+		
+		
 		Iterable<ReservedTables> allreserved = iReservedTablesRepo.findAll();
 		System.out.println(allreserved);
 		List<ReservedTab> lires = new ArrayList<ReservedTab>();
 		ReservedTab rtd;
+		if(session.getAttribute("role").toString().equals("Admin")) {
+			for (ReservedTables rt : allreserved) {
+				if (rt.getStatus()==null) {
+					System.out.println("customerrrrrrrrrrrrrrrrrrrrrrrrrr");
+					System.out.println(rt.getCustomerid());
+					rtd = new ReservedTab();
+					rtd.setReservedid(rt.get_id());
+					rtd.setOrderid(findorder(rt.get_id()));
+					rtd.setName(cust_name(rt.getCustomerid()));
+					rtd.setTable(table_number(rt.getReserved_table_id()));
+					rtd.setCustid(rt.getCustomerid());
+					lires.add(rtd);
+				}
+		}
+			model.addAttribute("role","admin");
+		}
+		else {
+			String id = (String) session.getAttribute("waiter_id");
 		for (ReservedTables rt : allreserved) {
 			if (rt.getWaiter_id() != null && rt.getWaiter_id().toString().equals(id) && rt.getStatus()==null) {
 				System.out.println("customerrrrrrrrrrrrrrrrrrrrrrrrrr");
@@ -312,6 +349,7 @@ public class WaiterController {
 				lires.add(rtd);
 			}
 
+		}
 		}
 		System.out.println(lires);
 		model.addAttribute("NR", lires);
