@@ -1,10 +1,12 @@
 package com.restaurant.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Splitter;
 import com.restaurant.model.Billing;
 import com.restaurant.model.ChangePassword;
 import com.restaurant.model.Menu;
 import com.restaurant.model.Orders;
-import com.restaurant.model.Payment;
 import com.restaurant.model.ReservedTab;
 import com.restaurant.model.ReservedTables;
+import com.restaurant.model.Spliting;
 import com.restaurant.model.Tables;
 import com.restaurant.model.Waiter;
 import com.restaurant.model.itemsquantity;
@@ -348,17 +352,114 @@ public class WaiterController {
 	@RequestMapping("split")
 	public String split(split splt, Model model, HttpServletRequest req, HttpSession session) {
 		System.out.println(splt);
+		String s;
+		List<Float> l= new ArrayList<>();
+		l.add(new Float(2));
+		l.add(splt.getSplit1());
+		l.add(splt.getSplit2());
+		l.add(splt.getSplit3());
+		l.add(splt.getSplit4());
+		l.add(splt.getSplit5());
+		Map<String,Float> splitmap =new HashMap<String,Float>();
+		for(Integer i=1;i<=splt.getSplitnumber();i++) {
+			s="split"+i.toString();
+			splitmap.put(s, l.get(i));
+		}
+		System.out.println(splitmap);
+		model.addAttribute("splitmap", splitmap);
+//		model.addAttribute("splt",splt);
+		return "selectsplit";
+	}
+	
+	@GetMapping("split1")
+	public String split(split splt, Model model, HttpServletRequest req, HttpSession session,@RequestParam("splitmap") String mapstring) {
+		StringBuilder sb = new StringBuilder(mapstring);
+		String st=sb.substring(1,sb.length()-1);
+		System.out.println(st);
+		Map splitmap = new HashMap();
+		System.out.println("------------------------------");
+		 String[] elements = st.split(",");
+		 for(String s1: elements) {
+		     String[] keyValue = s1.split("=");
+		     splitmap.put(keyValue[0], keyValue[1]);
+		 }
+		System.out.println(splitmap);
+		model.addAttribute("splitmap", splitmap);
+		return "selectsplit";
+	}
+	
+	@RequestMapping("paymentsplit")
+	public String paymentsplit(Model model, HttpServletRequest req, HttpSession session,Spliting splting) {
+//		Class<split> c= (Class<com.restaurant.model.split>) Class.forName(spltstr);
+//		System.out.println(c);
+//		System.out.println(spltstr);
+		System.out.println(splting);
+		split splt=new split();
+//		Gson gson = new Gson();
+//		JsonParser parser = new JsonParser();
+//		JsonObject object = (JsonObject) parser.parse(splting.getSplt());
+//		HashMap<String, Integer> splitmap = (HashMap<String, Integer>) Arrays.asList(splting.getSplt().split(",")).stream().map(s -> s.split(":")).collect(Collectors.toMap(e -> e[0], e -> Integer.parseInt(e[1])));
+//		split splt=gson.fromJson(object,split.class);
+//		Map<String,Object> splitmap =
+//		        new ObjectMapper().readValue(splting.getSplt(), HashMap.class);
+		StringBuilder sb = new StringBuilder(splting.getSplt());
+		String st=sb.substring(1,sb.length()-1);
+		System.out.println(st);
+		Map splitmap = new HashMap();
+		System.out.println("------------------------------");
+		 String[] elements = st.split(",");
+		 for(String s1: elements) {
+		     String[] keyValue = s1.split("=");
+		     splitmap.put(keyValue[0], keyValue[1]);
+		 }
+		System.out.println(splitmap);
+		boolean status=false;
+		if(splitmap.containsKey("split1")) {
+			model.addAttribute("amout",splitmap.get("split1") );
+			splitmap.remove("split1");
+			status=true;
+		}
+		if(splitmap.containsKey("split2")) {
+			model.addAttribute("amout", splitmap.get("split2"));
+			splitmap.remove("split2");
+			status=true;
+		}
+		if(splitmap.containsKey("split3")) {
+			model.addAttribute("amout", splitmap.get("split3"));
+			splitmap.remove("split3");
+			status=true;
+		}
+		if(splitmap.containsKey("split4")) {
+			model.addAttribute("amout", splitmap.get("split4"));
+			splitmap.remove("split4");
+			status=true;
+		}
+		if(splitmap.containsKey("split5")) {
+			model.addAttribute("amout", splitmap.get("split5"));
+			splitmap.remove("split5");
+			status=true;
+		}
+		model.addAttribute("split", splt);
+
+		if(status)
+		{
+			
+			model.addAttribute("splitmap",splitmap);
+			model.addAttribute("splt",splt);
 		return "payment";
+		}
+		else
+			return "redirect:/waiter/finalpayment";
 	}
 
 	@RequestMapping("finalpayment")
-	public String payment1(Payment payment, Model model, HttpServletRequest req, HttpSession session) {
+	public String payment1( Model model, HttpServletRequest req, HttpSession session) {
 
-		payment.setCustomer_id(new ObjectId(session.getAttribute("custid").toString()));
-		payment.setOrder_id(new ObjectId(session.getAttribute("order_id").toString()));
-		System.out.println(payment);
-		iPaymentRepo.save(payment);
-		ReservedTables reservetab = iReservedTablesRepo.findByCustomerid(payment.getCustomer_id());
+//		payment.setCustomer_id(new ObjectId(session.getAttribute("custid").toString()));
+//		payment.setOrder_id(new ObjectId(session.getAttribute("order_id").toString()));
+//		System.out.println(payment);
+//		iPaymentRepo.save(payment);
+		ReservedTables reservetab = iReservedTablesRepo.findByCustomerid(new ObjectId(session.getAttribute("custid").toString()));
 		System.out.println(reservetab);
 		reservetab.setStatus("served");
 		iReservedTablesRepo.save(reservetab);

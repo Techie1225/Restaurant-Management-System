@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class split {
 	
-	private Integer split1;
-	private Integer split2;
-	private Integer split3;
-	private Integer split4;
-	private Integer split5;
+	private Float split;
+	private Float split1;
+	private Float split2;
+	private Float split3;
+	private Float split4;
+	private Float split5;
+	private Integer splitnumber;
 }

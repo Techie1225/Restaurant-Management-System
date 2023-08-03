@@ -76,11 +76,11 @@ body {
 								<form th:action="@{split}" th:object="${split}" method="POST">
 								<div th:each="i : ${#numbers.sequence( 1, splitnumber)}">
 
-
+								<input type="hidden" th:value="${splitnumber}" name ="splitnumber">
 									<div class="form-group">
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;" >Split  <span th:text="${i}"></span> </span> <input type="number" required="required"
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;" >Split  <span th:text="${i}"></span> </span> <input type="number" step="0.01" required="required"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
-											style="font-family: cursive;color: black;font-size:120%;" id="${splitname}${i}" aria-describedby="emailHelp" th:name="|cellValue${splitname}${i}|"
+											style="font-family: cursive;color: black;font-size:120%;" id="${splitname}${i}" aria-describedby="emailHelp" th:attr="name=${splitname}+${i}"
 											autofocus>
 									</div>
 									</div>
