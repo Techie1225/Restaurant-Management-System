@@ -373,12 +373,16 @@ public class WaiterController {
 	
 	@GetMapping("split1")
 	public String split(split splt, Model model, HttpServletRequest req, HttpSession session,@RequestParam("splitmap") String mapstring) {
+		if(mapstring.equals("{}")) {
+			return "redirect:/waiter/finalpayment";
+		}
 		StringBuilder sb = new StringBuilder(mapstring);
+		System.out.println(mapstring);
 		String st=sb.substring(1,sb.length()-1);
 		System.out.println(st);
 		Map splitmap = new HashMap();
 		System.out.println("------------------------------");
-		 String[] elements = st.split(",");
+		 String[] elements = st.split(", ");
 		 for(String s1: elements) {
 		     String[] keyValue = s1.split("=");
 		     splitmap.put(keyValue[0], keyValue[1]);
@@ -407,34 +411,37 @@ public class WaiterController {
 		System.out.println(st);
 		Map splitmap = new HashMap();
 		System.out.println("------------------------------");
-		 String[] elements = st.split(",");
+		 String[] elements = st.split(", ");
 		 for(String s1: elements) {
 		     String[] keyValue = s1.split("=");
 		     splitmap.put(keyValue[0], keyValue[1]);
 		 }
-		System.out.println(splitmap);
+		System.out.println(splitmap.containsKey("split1"));
+		System.out.println(splitmap.containsKey("split2"));
+		System.out.println(splitmap.containsKey("split3"));
+		System.out.println(splitmap.containsKey("split4"));
 		boolean status=false;
 		if(splitmap.containsKey("split1")) {
 			model.addAttribute("amout",splitmap.get("split1") );
 			splitmap.remove("split1");
 			status=true;
 		}
-		if(splitmap.containsKey("split2")) {
+		else if(splitmap.containsKey("split2")) {
 			model.addAttribute("amout", splitmap.get("split2"));
 			splitmap.remove("split2");
 			status=true;
 		}
-		if(splitmap.containsKey("split3")) {
+		else if(splitmap.containsKey("split3")) {
 			model.addAttribute("amout", splitmap.get("split3"));
 			splitmap.remove("split3");
 			status=true;
 		}
-		if(splitmap.containsKey("split4")) {
+		else if(splitmap.containsKey("split4")) {
 			model.addAttribute("amout", splitmap.get("split4"));
 			splitmap.remove("split4");
 			status=true;
 		}
-		if(splitmap.containsKey("split5")) {
+		else if(splitmap.containsKey("split5")) {
 			model.addAttribute("amout", splitmap.get("split5"));
 			splitmap.remove("split5");
 			status=true;
