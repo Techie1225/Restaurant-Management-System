@@ -78,9 +78,9 @@ body {
 
 
 									<div class="form-group">
-										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;" >Spit  <span th:text="${i}"></span> </span> <input type="number" required="required"
+										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;" >Split  <span th:text="${i}"></span> </span> <input type="number" required="required"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0 border-bottom-1px"
-											style="font-family: cursive;color: black;font-size:120%;" id="${splitname}${i}" aria-describedby="emailHelp" name=${splitname}${i}
+											style="font-family: cursive;color: black;font-size:120%;" id="${splitname}${i}" aria-describedby="emailHelp" th:name="|cellValue${splitname}${i}|"
 											autofocus>
 									</div>
 									</div>

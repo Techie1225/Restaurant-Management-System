@@ -18,6 +18,6 @@ public class Menu {
 	@Id
 	private ObjectId _id;
 	private String item;
-	private Integer price;
+	private Float price;
 
 }

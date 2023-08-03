@@ -12,4 +12,6 @@ public class split {
 	private Integer split1;
 	private Integer split2;
 	private Integer split3;
+	private Integer split4;
+	private Integer split5;
 }
