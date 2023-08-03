@@ -328,9 +328,9 @@ public class WaiterController {
 
 //	@RequestParam("split") String split,
 	@GetMapping("/payment")
-	public String payment( @RequestParam("totalprice") String totalprice,
+	public String payment( @RequestParam("totalprice") String totalprice,@RequestParam("split") String split,
 			Model model, HttpServletRequest req, HttpSession session) {
-//		System.out.println(split);
+		System.out.println(split);
 		System.out.println(totalprice);
 		Billing bill = new Billing();
 		bill.setAmount(Float.parseFloat(totalprice));
@@ -339,8 +339,8 @@ public class WaiterController {
 		
 		ObjectId id = iBillRepo.save(bill).get_id();
 //		session.setAttribute("billid", id);
-
-		return "payment";
+		model.addAttribute("split", split);
+		return "split";
 	}
 
 	@RequestMapping("payment")
