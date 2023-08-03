@@ -72,6 +72,7 @@ body {
 									<tr style="border: thick;">
 										<th style="font-family: cursive;font-size: x-large;color: black;font-size:160%;text-align: center;">Item</th>
 										<th style="font-family: cursive;font-size: x-large;color: black;font-size:160%;text-align: center;">Price</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Remove</th>
 									</tr>
 								</thead>
 								
@@ -80,6 +81,7 @@ body {
 									<tr th:each="item : ${allItems}">
 										<td style="font-family: cursive;font-size: x-large;color: black;font-size:120%;text-align: center;" th:text="${item.getItem()}"></td>
 										<td style="font-family: cursive;font-size: x-large;color: black;font-size:120%;text-align: center;" th:text="${item.getPrice()}"></td>
+										<td><a th:href="@{deleteitem?menu_id={menu_id}(menu_id=${item.get_id()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;margin-left: 16px" class="btn btn-primary">Remove</button></a></td>
 									</tr>
 								</tbody>
 							</table>

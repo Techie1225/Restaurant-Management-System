@@ -13,4 +13,6 @@ public interface IMenuRepo extends CrudRepository<Menu,ObjectId> {
 
 	Menu findBy_id(ObjectId id);
 
+	Menu deleteBy_id(ObjectId menu_id);
+
 }

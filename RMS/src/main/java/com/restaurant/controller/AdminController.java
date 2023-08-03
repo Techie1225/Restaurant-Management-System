@@ -18,11 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.restaurant.model.Admin;
 import com.restaurant.model.Menu;
-import com.restaurant.model.Orders;
 import com.restaurant.model.ReservedTab;
 import com.restaurant.model.ReservedTables;
 import com.restaurant.model.Tables;
 import com.restaurant.repo.ICustomerRepo;
+import com.restaurant.repo.IMenuRepo;
 import com.restaurant.repo.IReservedTablesRepo;
 import com.restaurant.repo.ITableRepo;
 import com.restaurant.service.AdminService;
@@ -46,6 +46,9 @@ public class AdminController {
 	
 	@Autowired
 	private ITableRepo iTableRepo;
+	
+	@Autowired
+	private IMenuRepo iItemRepo;
 	
 	@Autowired
 	private ItemService itemService;
@@ -85,7 +88,7 @@ public class AdminController {
 		List<ReservedTables> li = waiterService.findAllTables();
 		List<ReservedTab> lires = new ArrayList<ReservedTab>();
 //		model.addAttribute("NR",li);
-		model.addAttribute("waiter_id", session.getAttribute("waiter_id"));
+//		model.addAttribute("waiter_id", session.getAttribute("waiter_id"));
 //		model.addAttribute("cust_name",cust_name(null));
 //		model.addAttribute("table",table_number(null));
 		ReservedTab rtd;
@@ -167,10 +170,17 @@ public class AdminController {
 	}
 	
 	@GetMapping("deletetable")
-	public String assignTable(HttpSession session,@RequestParam("table_id") ObjectId table_id, Model model) {
+	public String deletetable(HttpSession session,@RequestParam("table_id") ObjectId table_id, Model model) {
 		System.out.println(table_id);
 		Tables tables = iTableRepo.deleteBy_id(table_id);
 		return "redirect:/admin/tables";
+	}
+	
+	@GetMapping("deleteitem")
+	public String deleteitem(HttpSession session,@RequestParam("menu_id") ObjectId menu_id, Model model) {
+//		System.out.println(menu_id);
+		Menu tables = iItemRepo.deleteBy_id(menu_id);
+		return "redirect:/admin/menu";
 	}
 	
 	@PostMapping("addTables")
