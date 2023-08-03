@@ -111,7 +111,7 @@ body {
 						of Splits </span> <input required="required" type="number"
 						autofocus="autofocus" class="form-control "
 						style="font-family: cursive; color: black; font-size: 120%; margin-left: 30px"
-						id="split" name="split" /> 
+						id="split" name="split" max=3 /> 
 					
 				</div>
 				<br> <br>
@@ -134,9 +134,9 @@ body {
 							<div class="card-body">
 
 								<div class="container">
-									<h4
+								<!--  	<h4
 										style="color: green; padding-bottom: 5px; font-family: cursive"
-										th:text="${msg}"></h4>
+										th:text="${msg}"></h4> -->
 								</div>
 								<form th:action="@{orderitem}" th:object="${orderItems}"
 									method="Get">

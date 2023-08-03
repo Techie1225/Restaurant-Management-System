@@ -27,6 +27,7 @@ import com.restaurant.model.Tables;
 import com.restaurant.model.Waiter;
 import com.restaurant.model.itemsquantity;
 import com.restaurant.model.orderItems;
+import com.restaurant.model.split;
 import com.restaurant.repo.IBillRepo;
 import com.restaurant.repo.ICustomerRepo;
 import com.restaurant.repo.IMenuRepo;
@@ -339,11 +340,18 @@ public class WaiterController {
 		
 		ObjectId id = iBillRepo.save(bill).get_id();
 //		session.setAttribute("billid", id);
-		model.addAttribute("split", split);
+		model.addAttribute("splitnumber", split);
+		model.addAttribute("splitname", "split");
 		return "split";
 	}
+	
+	@RequestMapping("split")
+	public String split(split splt, Model model, HttpServletRequest req, HttpSession session) {
+		System.out.println(splt);
+		return "payment";
+	}
 
-	@RequestMapping("payment")
+	@RequestMapping("finalpayment")
 	public String payment1(Payment payment, Model model, HttpServletRequest req, HttpSession session) {
 
 		payment.setCustomer_id(new ObjectId(session.getAttribute("custid").toString()));
