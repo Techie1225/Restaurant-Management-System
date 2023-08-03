@@ -11,5 +11,6 @@ public interface IWaiterRepo extends CrudRepository<Waiter,ObjectId> {
 	
 	Optional<Waiter> findByUsernameAndPassword(String username, String password);
 	Optional<Waiter> findFirstByUsername(String username);
+	Optional<Waiter> findBy_id(ObjectId waiterid);
 
 }

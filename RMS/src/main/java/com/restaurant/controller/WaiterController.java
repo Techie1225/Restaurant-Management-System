@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.restaurant.model.Billing;
+import com.restaurant.model.ChangePassword;
 import com.restaurant.model.Menu;
 import com.restaurant.model.Orders;
 import com.restaurant.model.Payment;
@@ -33,31 +34,34 @@ import com.restaurant.repo.IOrdersRepo;
 import com.restaurant.repo.IPaymentRepo;
 import com.restaurant.repo.IReservedTablesRepo;
 import com.restaurant.repo.ITableRepo;
+import com.restaurant.repo.IWaiterRepo;
 import com.restaurant.service.OdersService;
 import com.restaurant.service.WaiterService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 
 @Controller
 @RequestMapping("waiter")
 public class WaiterController {
+	
+	@Autowired
+	private IWaiterRepo iWaiterRepo;
 
 	@Autowired
 	private WaiterService waiterService;
 
 	@Autowired
 	private ICustomerRepo iCustomerRepo;
+	
+	@Autowired
+	private ITableRepo iTableRepo;
 
 	@Autowired
 	private IOrdersRepo iOrderRepo;
 
 	@Autowired
 	private IReservedTablesRepo iReservedTablesRepo;
-
-	@Autowired
-	private ITableRepo iTableRepo;
 
 	@Autowired
 	private IMenuRepo iMenuRepo;
@@ -86,6 +90,7 @@ public class WaiterController {
 		} else {
 			model.addAttribute("msg", "Registered Successfully!!...");
 			model.addAttribute("color", "green");
+			waiter.setStatus("change");
 			waiterService.saveCustomer(waiter);
 			return "waiterRegistration";
 		}
@@ -101,7 +106,12 @@ public class WaiterController {
 			RedirectAttributes redirectAttributes, HttpSession session) {
 		System.out.println(waiter);
 		Optional<Waiter> obj = waiterService.findByUsernameAndPassword(waiter.getUsername(), waiter.getPassword());
-		if (obj.isPresent()) {
+		if(obj.isPresent() && ("change").equals(obj.get().getStatus())) {
+			waiter=obj.get();
+			model.addAttribute("waiterid",waiter.get_id());
+			return "changePassword";
+		}
+		else if (obj.isPresent()) {
 			redirectAttributes.addAttribute("waiter_id", obj.get().get_id());
 			session.setAttribute("role", "Waiter");
 			session.setAttribute("waiter_id", obj.get().get_id().toString());
@@ -113,6 +123,26 @@ public class WaiterController {
 		}
 	}
 
+	@PostMapping("changepassword")
+	public String changepassword(ChangePassword changepassword, Model model) {
+		System.out.println(changepassword.getWaiterid());
+		System.out.println(changepassword);
+		Optional<Waiter> obj = iWaiterRepo.findBy_id(changepassword.getWaiterid());
+		Waiter waiter = obj.get();
+		if(waiter.getPassword().equals(changepassword.getCurrentpassword())) {
+			waiter.setPassword(changepassword.getNewpassword());
+			waiter.setStatus(null);
+			iWaiterRepo.save(waiter);
+			return "waiterLogin";
+		}
+		else {
+			
+			model.addAttribute("waiterid",waiter.get_id());
+			return "changePassword";
+			}
+		
+	}
+	
 	@GetMapping("home")
 	public String home(HttpSession session, Model model) {
 //		if(session.getAttribute("role")==null) {
@@ -166,21 +196,7 @@ public class WaiterController {
 		return "orders";
 	}
 
-	@GetMapping("removeTable")
-	public String removeTable(@RequestParam("res_table_id") ObjectId res_table_id,
-			@RequestParam("waiter_id") ObjectId waiter_id, Model model) {
-		System.out.println(res_table_id);
-		System.out.println(waiter_id);
-		ReservedTables reservedTables = iReservedTablesRepo.findBy_id(res_table_id);
-//		reservedTables.setWaiter_id(waiter_id);
-		iReservedTablesRepo.delete(reservedTables);
-		iCustomerRepo.deleteBy_id(reservedTables.getCustomerid());
-		Tables tab = iTableRepo.findBy_id(reservedTables.getReserved_table_id());
-		tab.setStatus("Not Occupied");
-		iTableRepo.save(tab);
-		return "redirect:/waiter/home";
-	}
-	
+
 	@GetMapping("orderitem")
 	public String oderitem(HttpSession session, Model model, orderItems orderItems) {
 		int quantity;

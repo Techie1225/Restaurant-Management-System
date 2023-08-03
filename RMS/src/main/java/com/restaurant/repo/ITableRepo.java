@@ -15,4 +15,6 @@ public interface ITableRepo extends CrudRepository<Tables, ObjectId> {
 
 	Tables findBy_id(ObjectId id);
 
+	Tables deleteBy_id(ObjectId table_id);
+
 }

@@ -70,16 +70,16 @@ body {
 							<table class="table">
 								<thead style="border: thick;">
 									<tr style="border: thick;">
-										<th style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Item</th>
-										<th style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">Price</th>
+										<th style="font-family: cursive;font-size: x-large;color: black;font-size:160%;text-align: center;">Item</th>
+										<th style="font-family: cursive;font-size: x-large;color: black;font-size:160%;text-align: center;">Price</th>
 									</tr>
 								</thead>
 								
 								<tbody>
 								
 									<tr th:each="item : ${allItems}">
-										<td style="font-family: cursive;font-size: x-large;color: black;font-size:120%;" th:text="${item.getItem()}"></td>
-										<td style="font-family: cursive;font-size: x-large;color: black;font-size:120%;" th:text="${item.getPrice()}"></td>
+										<td style="font-family: cursive;font-size: x-large;color: black;font-size:120%;text-align: center;" th:text="${item.getItem()}"></td>
+										<td style="font-family: cursive;font-size: x-large;color: black;font-size:120%;text-align: center;" th:text="${item.getPrice()}"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -98,9 +98,9 @@ body {
 						<div class="card-body">
 
 							<div class="container">
-								<h4 style="padding-bottom: 5px; font-family: cursive;"
+								<!--  <h4 style="padding-bottom: 5px; font-family: cursive;"
 									th:style="|${color == 'red' ? 'color: red;' : 'color: green;'}|"
-									th:text="${msg}"></h4>
+									th:text="${msg}"></h4>-->
 							</div>
 							<form th:action="@{menu}" th:object="${Item}" method="POST">
 								<div class="form-group">

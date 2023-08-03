@@ -65,17 +65,18 @@ body {
 							<table class="table">
 								<thead>
 									<tr >
-										<th style="font-family: cursive;color: black;font-size:160%;">Table Number</th>
-										<th style="font-family: cursive;color: black;font-size:160%;">Capacity</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Table</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Capacity</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Remove</th>
 									</tr>
 								</thead>
 								
 								<tbody>
 								
 									<tr  th:each="table : ${allTables}">
-										<td style="font-family: cursive;color: black;font-size:120%;" th:text="${table.getTableNumber()}"></td>
-										<td style="font-family: cursive;color: black;font-size:120%;" th:text="${table.getCapacity()}"></td>
-										
+										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTableNumber()}"></td>
+										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getCapacity()}"></td>
+										<td><a th:href="@{deletetable?table_id={table_id}(table_id=${table.get_id()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;margin-left: 16px" class="btn btn-primary">Remove</button></a></td>
 									</tr>
 								</tbody>
 							</table>

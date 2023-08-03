@@ -24,10 +24,9 @@
 
 <style>
 .bg-img {
-	background-image:
-		url('/rms/foodtable.gif');
-	height: 90.8vh;
-	width: 70%;
+	background-image: url("/rms/foodtable.gif");
+	height: 90.7vh;
+	width: 100%;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -43,7 +42,8 @@ button {
 	border: 1px solid #2d63c8;
 	padding: 15px 50px;
 	cursor: pointer;
-	width: 250px;
+	width: 150px;
+	
 }
 
 button:hover {
@@ -54,6 +54,8 @@ button:hover {
 a {
 	text-decoration: none;
 }
+
+
 </style>
 </head>
 
@@ -61,8 +63,39 @@ a {
 
 <body>
 	<div th:insert="navbar :: navbar"></div>
-	<div class="container-fluid bg-img"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-7 bg-img" ></div>
+			<div class="col-md-5">
+				<div class="card border-0">
+					<div class="card-body">
+						<div class="container-fluid">
+						<br><br><br>
+							<table class="table">
+								<thead>
+									<tr >
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Name</th>
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Table</th>
+									<!--	<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Assign</th>-->
+										<th style="font-family: cursive;color: black;font-size:160%;text-align: center;">Remove</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+								
+									<tr  th:each="table : ${NR}">
+										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getName()}"></td>
+										<td style="font-family: cursive;color: black;font-size:120%;text-align: center;" th:text="${table.getTable()}"></td>
+									<!--  	<td><a th:href="@{assignTable?res_table_id={res_table_id}&waiter_id={waiter_id}&cust_id={cust_id}(waiter_id=${waiter_id},cust_id=${table.getCustid()},res_table_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Assign</button></a></td>-->
+										<td><a th:href="@{removeTable?res_table_id={res_table_id}(res_table_id=${table.getReservedid()})}" ><button type="button" style="align-items: center;font-family: cursive;font-size:100%;text-align: center;" class="btn btn-primary">Remove</button></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
 
-
-
+		</div>
+	</div>
 </body>

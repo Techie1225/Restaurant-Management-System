@@ -106,12 +106,12 @@ body {
 				<form th:action="@{payment}" method="Get">
 				<input type="hidden" th:value="${totalprice}" name="totalprice">
 				<div class="form-inline">
-					<!-- <span
+					<span
 						style="font-family: cursive; font-size: x-large; color: black; font-size: 160%; margin-left: 55px">No
-						of Splits </span> <input required="required" type="hidden"
+						of Splits </span> <input required="required" type="number"
 						autofocus="autofocus" class="form-control "
 						style="font-family: cursive; color: black; font-size: 120%; margin-left: 30px"
-						id="split" name="split" th:value="1" /> -->
+						id="split" name="split" /> 
 					
 				</div>
 				<br> <br>
