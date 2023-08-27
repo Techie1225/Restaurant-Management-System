@@ -75,8 +75,8 @@ body {
 							<div class="card-body">
 
 								<div class="container">
-									<!--  	<h3 class="text-center" style="color: red;">{{message}}</h3> -->
-								<!--  	<h4 style="padding-bottom:5px;font-family: cursive;" th:style="|${color == 'red' ? 'color: red;' : 'color: green;'}|" th:text="${msg}"></h4>-->
+									 
+							 	<h4 style="padding-bottom:5px;font-family: cursive;" th:style="|${color == 'red' ? 'color: red;' : 'color: green;'}|" th:text="${msg}"></h4>
 								</div>
 								<form th:action="@{reserve}" th:object="${Customer}"
 									method="POST">
@@ -106,10 +106,10 @@ body {
 									<div class="form-group">
 
 										<span style="font-family: cursive;font-size: x-large;color: black;font-size:160%;">To Date</span> <input
-											required="required" type="datetime-local"
+											required="required" type="time"
 											class="form-control mt-2 border-left-0 border-top-0 border-right-0"
 											style="font-family: cursive;font-size: x-large;color: black;font-size:100%;"
-											id="to_date" name="to_date"  /> 
+											id="to_date_convert" name="to_date_convert"  /> 
 									</div>
 									<br>
 									<center>

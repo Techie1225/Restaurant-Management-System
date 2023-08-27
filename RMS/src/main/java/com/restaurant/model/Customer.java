@@ -1,5 +1,6 @@
 package com.restaurant.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -24,7 +25,7 @@ public class Customer {
 	private String name;
 	private Long phone;
 	private Integer no_of_people;
-//	private String to_date_convert;
+	private String to_date_convert;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime to_date;
 

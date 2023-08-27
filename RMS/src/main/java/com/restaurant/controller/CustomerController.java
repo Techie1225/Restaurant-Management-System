@@ -52,16 +52,16 @@ public class CustomerController {
 	@RequestMapping("reserve")
 	public String afterReserve(Customer customer, Model model, HttpServletRequest req) throws ParseException {
 		System.out.println(customer);
-		StringBuilder sb = new StringBuilder(customer.getTo_date().toString());
+//		StringBuilder sb = new StringBuilder(customer.getTo_date());
 		SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
 		// Parse the time string into a LocalTime object
-//		LocalTime localTime = LocalTime.parse(customer.getTo_date().toString(), DateTimeFormatter.ofPattern("HH:mm"));
+		LocalTime localTime = LocalTime.parse(customer.getTo_date_convert().toString(), DateTimeFormatter.ofPattern("HH:mm"));
 
 		// Combine the LocalTime with the current date to create a LocalDateTime object
-//		customer.setTo_date(LocalDateTime.of(LocalDate.now(), localTime));
-		Date userDate = parser.parse(sb.substring(11));
+		customer.setTo_date(LocalDateTime.now());
+		Date userDate = parser.parse(customer.getTo_date_convert());
 		System.out.println(userDate);
-//		customer.setTo_date_convert(null);
+		customer.setTo_date_convert(null);
 		System.out.println(customer);
 		ObjectId custId = customerService.saveCustomer(customer);
 		

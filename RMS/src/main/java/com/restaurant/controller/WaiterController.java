@@ -1,12 +1,10 @@
 package com.restaurant.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Splitter;
 import com.restaurant.model.Billing;
 import com.restaurant.model.ChangePassword;
 import com.restaurant.model.Menu;
 import com.restaurant.model.Orders;
+import com.restaurant.model.Payment;
 import com.restaurant.model.ReservedTab;
 import com.restaurant.model.ReservedTables;
 import com.restaurant.model.Spliting;
@@ -91,6 +88,7 @@ public class WaiterController {
 		System.out.println(check);
 		if (check.isPresent()) {
 			model.addAttribute("msg", "Duplicate Details!!!.....");
+			model.addAttribute("color", "red");
 			return "waiterRegistration";
 		} else {
 			model.addAttribute("msg", "Registered Successfully!!...");
@@ -498,22 +496,30 @@ public class WaiterController {
 	}
 
 	@RequestMapping("finalpayment")
-	public String payment1( Model model, HttpServletRequest req, HttpSession session) {
-
-//		payment.setCustomer_id(new ObjectId(session.getAttribute("custid").toString()));
-//		payment.setOrder_id(new ObjectId(session.getAttribute("order_id").toString()));
-//		System.out.println(payment);
-//		iPaymentRepo.save(payment);
+	public String payment1(@RequestParam("totalprice") String totalprice,
+			Model model, HttpServletRequest req, HttpSession session) {
 		ReservedTables reservetab = iReservedTablesRepo.findByCustomerid(new ObjectId(session.getAttribute("custid").toString()));
 		System.out.println(reservetab);
+		System.out.println(totalprice);
 		reservetab.setStatus("served");
 		iReservedTablesRepo.save(reservetab);
 		Tables tab = iTableRepo.findBy_id(reservetab.getReserved_table_id());
 		tab.setStatus("Not Occupied");
 		iTableRepo.save(tab);
-		return "redirect:/waiter/home";
+		model.addAttribute("amount", totalprice);
+		return "payment";
 	}
 
+	
+	@RequestMapping("finalpayment1")
+	public String finalpayment1(Payment payment,
+			Model model, HttpServletRequest req, HttpSession session) {
+		payment.setCustomer_id(new ObjectId(session.getAttribute("custid").toString()));
+		payment.setWaiter_id(new ObjectId(session.getAttribute("waiter_id").toString()));
+		iPaymentRepo.save(payment);
+		return "redirect:/waiter/home";
+	}
+	
 	@GetMapping("/logout")
 	public String waiterLogout(Model model, HttpServletRequest req) {
 		req.getSession().invalidate();
